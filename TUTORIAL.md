@@ -232,8 +232,13 @@ Here's where each pattern known in Domain-Driven Design will be placed
 ###### Patterns Theory
 
 1. `Aggregate / Entity / Value Object`: Class diagram's version of data
-2. `Strategy`: Encapsulation of main function's parameters for error handling, especially for constructors of aggregates
-3. `Resource`: Endpoint's version of data
+2. `Command`: Parameters handler of the application's main functions, including the constructors of aggregates
+3. `Query`: Permitted query to obtain database's version of data
+4. `Service`: Grouping with handling of commands and queries of the same aggregate
+5. `Repository AKA Outbound Service`: List of aggregates / entities existing in the application
+6. `Implementation of Command Service`: Required declaration of handlers in service
+7. `Implementation of Query Service`: Required declaration of handlers in service
+8. `Resource`: Endpoint's version of data
 
 ## 8.
 ###### Patterns Requirements
@@ -251,9 +256,15 @@ Inside `domain/model/aggregates`
     3. Every attribute with a wanted getter must be decorated with `@Getter`
     4. Every attribute with a wanted setter must be decorated with `@Setter`
     5. Every attribute aside of `@Id` must be decorated with `@Column(nullable = false)`
-    6. Every collection attribute (datatype of `List`) must be decorated with `@ElementCollection`, or `@OneToMany` or `@ManyToMany`
-    7. If a date created attribute wants to be added, it must be decorated with `@DateCreated` and use `java.util.Date` (not java.sql.Date)
-    8. If a last updated date attribute wants to be added, it must be decorated with `@LastModifiedDate` and use `java.util.Date` (not java.sql.Date)
+    6. Every value object attribute must be decorated with `@Embedded`
+    7. Every collection attribute (datatype of `List`) must be decorated with `@ElementCollection`, or `@OneToMany` or `@ManyToMany`
+    8. If a date created attribute wants to be added, it must be decorated with `@DateCreated` and use `java.util.Date` (not java.sql.Date)
+    9. If a last updated date attribute wants to be added, it must be decorated with `@LastModifiedDate` and use `java.util.Date` (not java.sql.Date)
+    10. If an attribute has a very different name in the database use `@AttributeOverrides({ @AttributeOverride(name = "attribute_name", column = @Column(name ="database_name")) })`
+    11. A value object is specially the attribute that will have many `@AttributeOverride` inside `@AttributeOverrides`
+    12. Needs a constructor that has its `Command` as `parameter`, then each `attribute` must be initialized with the `Command's version`
+5. Pattern dependencies:
+    1. Must have `Command` created to complete
 
 ##### Value Objects
 
@@ -271,3 +282,61 @@ Inside `domain/model/valueobjects`
 
     For 2: this(null, null)
     For 3: this(null, null, null)
+
+##### Commands
+
+Inside `domain/model/commands`
+
+Named as verb + aggregate + `Command`. Like `CreateProjectCommand`
+
+1. Create a `Java Class :: Record`
+2. Command nature:
+    1. All attributes from the aggregate must be added as parameters
+    2. If error handling wanted, create a general constructor with the logic
+
+##### Queries
+
+Inside `domain/model/queries`
+
+Named as `Get` + Explanation of Query + `Query`. Like `GetAllProjectsQuery` or `GetProjectByIdQuery`
+
+1. Create a `Java Class :: Record`
+2. Query nature:
+    1. All attributes used in SQL boolean expressions must be included as parameters
+
+##### Services
+
+Inside `domain/services`
+
+Named as aggregate + `Command`/`Query` + `Service`. Like `ProjectCommandService` or `ProjectQueryService`
+
+1. Create a `Java Class :: Interface`
+2. Service nature:
+    1. For each `command`/`query` encompassed create a `function` called `handle` with `Optional<AggregateName>` as `output`, and the focused `command`/`query` as `parameter`. Like `Optional<Project> handle(CreateProjectCommand command);` or `Optional<Project> handle(GetProjectByIdQuery query);`
+        1. For query only, if the `query` is expected to return a `list` of aggregates, use `List<AggregateName>` as output instead. Like `List<Project> handle(GetAllProjectsQuery query);`
+
+##### Repositories
+
+Inside `infrastructure/persistence/jpa/repositories`
+
+Named as aggregate + Repository. Like `ProjectRepository`
+
+1. Create a `Java Class :: Interface`
+2. Include in first line `extends JpaRepository<AggregateName, IdDataType>`. Like extends `JpaRepository<Project, Long>`
+3. Decorate with `@Repository`
+4. Repository nature:
+    1. For each way to `get` a `group or single` one of the `aggregates` working in the application, there must be a `function` that uses `Optional<AggregateName>` or `List<AggregateName>` as output, `find` + function's purpose as its name, and values needed to realize the search as parameters
+
+##### Implementations of Command Services
+
+Inside `application/internal/commandservices`
+
+1. Create a `Java Class :: Class`
+2. Decorate with `@Service`
+
+##### Implementations of Query Services
+
+Inside `application/internal/queryservices`
+
+1. Create a `Java Class :: Class`
+2. Decorate with `@Service`
