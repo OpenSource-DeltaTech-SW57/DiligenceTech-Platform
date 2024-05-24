@@ -234,7 +234,11 @@ Here's where each pattern known in Domain-Driven Design will be placed
 1. `Aggregate / Entity / Value Object`: Class diagram's version of data
 2. `Command`: Parameters handler of the application's main functions, including the constructors of aggregates
 3. `Query`: Permitted query to obtain database's version of data
-4. `Resource`: Endpoint's version of data
+4. `Service`: Grouping with handling of commands and queries of the same aggregate
+5. `Repository AKA Outbound Service`: List of aggregates / entities existing in the application
+6. `Implementation of Command Service`: Required declaration of handlers in service
+7. `Implementation of Query Service`: Required declaration of handlers in service
+8. `Resource`: Endpoint's version of data
 
 ## 8.
 ###### Patterns Requirements
@@ -294,6 +298,45 @@ Named as verb + aggregate + `Command`. Like `CreateProjectCommand`
 
 Inside `domain/model/queries`
 
+Named as `Get` + Explanation of Query + `Query`. Like `GetAllProjectsQuery` or `GetProjectByIdQuery`
+
 1. Create a `Java Class :: Record`
 2. Query nature:
     1. All attributes used in SQL boolean expressions must be included as parameters
+
+##### Services
+
+Inside `domain/services`
+
+Named as aggregate + `Command`/`Query` + `Service`. Like `ProjectCommandService` or `ProjectQueryService`
+
+1. Create a `Java Class :: Interface`
+2. Service nature:
+    1. For each `command`/`query` encompassed create a `function` called `handle` with `Optional<AggregateName>` as `output`, and the focused `command`/`query` as `parameter`. Like `Optional<Project> handle(CreateProjectCommand command);` or `Optional<Project> handle(GetProjectByIdQuery query);`
+        1. For query only, if the `query` is expected to return a `list` of aggregates, use `List<AggregateName>` as output instead. Like `List<Project> handle(GetAllProjectsQuery query);`
+
+##### Repositories
+
+Inside `infrastructure/persistence/jpa/repositories`
+
+Named as aggregate + Repository. Like `ProjectRepository`
+
+1. Create a `Java Class :: Interface`
+2. Include in first line `extends JpaRepository<AggregateName, IdDataType>`. Like extends `JpaRepository<Project, Long>`
+3. Decorate with `@Repository`
+4. Repository nature:
+    1. For each way to `get` a `group or single` one of the `aggregates` working in the application, there must be a `function` that uses `Optional<AggregateName>` or `List<AggregateName>` as output, `find` + function's purpose as its name, and values needed to realize the search as parameters
+
+##### Implementations of Command Services
+
+Inside `application/internal/commandservices`
+
+1. Create a `Java Class :: Class`
+2. Decorate with `@Service`
+
+##### Implementations of Query Services
+
+Inside `application/internal/queryservices`
+
+1. Create a `Java Class :: Class`
+2. Decorate with `@Service`
