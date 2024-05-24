@@ -1,5 +1,6 @@
 package com.deltatech.diligencetech.platform.duediligence.domain.model.aggregates;
 
+import com.deltatech.diligencetech.platform.duediligence.domain.model.commands.CreateInformationGroupCommand;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -52,11 +53,29 @@ public class InformationGroup extends AbstractAggregateRoot<InformationGroup> {
     @Column(nullable = false)
     private Date updatedAt;
 
-    // private List<InformationGroup> children;
+    @OneToMany
+    private List<InformationGroup> children;
     // private List<Document> documents;
     // private List<Question> questions;
 
-    // CONSTRUCTOR
-    protected InformationGroup() {}
-    // METHODS
+    public InformationGroup(boolean obligatory, String groupIdentifier, String name, String priority, String buySideStatus, String sellSideStatus) {
+        this.obligatory = obligatory;
+        this.groupIdentifier = groupIdentifier;
+        this.name = name;
+        this.priority = priority;
+        this.sellSideStatus = sellSideStatus;
+        this.buySideStatus = buySideStatus;
+    }
+
+    public InformationGroup() {}
+
+    public InformationGroup(CreateInformationGroupCommand command) {
+        this.obligatory = command.obligatory();
+        this.groupIdentifier = command.groupIdentifier();
+        this.name = command.name();
+        this.priority = command.priority();
+        this.sellSideStatus = command.sellSideStatus();
+        this.buySideStatus = command.buySideStatus();
+    }
+
 }
