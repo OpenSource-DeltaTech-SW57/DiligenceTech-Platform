@@ -1,4 +1,4 @@
-package com.deltatech.diligencetech.platform.duediligence.domain.model.queries;
+package com.deltatech.diligencetech.platform.shared.domain.model.queries;
 
 public record GetNotificationByIdQuery(Long id) {
 }
