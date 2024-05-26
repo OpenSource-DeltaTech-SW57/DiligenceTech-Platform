@@ -1,7 +1,7 @@
-package com.deltatech.diligencetech.platform.duediligence.domain.services;
+package com.deltatech.diligencetech.platform.shared.domain.services;
 
-import com.deltatech.diligencetech.platform.duediligence.domain.model.aggregates.Notification;
-import com.deltatech.diligencetech.platform.duediligence.domain.model.commands.CreateNotificationCommand;
+import com.deltatech.diligencetech.platform.shared.domain.model.aggregates.Notification;
+import com.deltatech.diligencetech.platform.shared.domain.model.commands.CreateNotificationCommand;
 
 import java.util.Optional;
 

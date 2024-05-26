@@ -1,8 +1,8 @@
-package com.deltatech.diligencetech.platform.duediligence.domain.services;
+package com.deltatech.diligencetech.platform.shared.domain.services;
 
-import com.deltatech.diligencetech.platform.duediligence.domain.model.aggregates.Agent;
-import com.deltatech.diligencetech.platform.duediligence.domain.model.queries.GetAgentByIdQuery;
-import com.deltatech.diligencetech.platform.duediligence.domain.model.queries.GetAllAgentsQuery;
+import com.deltatech.diligencetech.platform.shared.domain.model.aggregates.Agent;
+import com.deltatech.diligencetech.platform.shared.domain.model.queries.GetAgentByIdQuery;
+import com.deltatech.diligencetech.platform.shared.domain.model.queries.GetAllAgentsQuery;
 
 import java.util.List;
 import java.util.Optional;
