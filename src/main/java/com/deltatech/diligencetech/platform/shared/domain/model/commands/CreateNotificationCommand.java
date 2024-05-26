@@ -1,7 +1,5 @@
-package com.deltatech.diligencetech.platform.duediligence.domain.model.commands;
+package com.deltatech.diligencetech.platform.shared.domain.model.commands;
 
-import java.util.Date;
-
-public record CreateNotificationCommand(String type, String content, Date createdAt) {
+public record CreateNotificationCommand(String id, String username, String type, String content, String createdAt) {
 public CreateNotificationCommand{}
 }
