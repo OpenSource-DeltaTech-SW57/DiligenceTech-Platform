@@ -22,6 +22,8 @@ public class InformationGroup extends AbstractAggregateRoot<InformationGroup> {
     @Getter
     private Long id;
 
+    /*
+    // Relationships
     @ManyToOne
     @Getter
     //@JoinColumn
@@ -43,6 +45,7 @@ public class InformationGroup extends AbstractAggregateRoot<InformationGroup> {
     @OneToMany
     @Getter
     private List<Question> questions;
+    */
 
     @Column(nullable = false)
     @Getter
@@ -77,11 +80,6 @@ public class InformationGroup extends AbstractAggregateRoot<InformationGroup> {
     private Date updatedAt;
 
     public InformationGroup(boolean obligatory, String identifier, String name, String priority, String buyStatus, String sellStatus) {
-        this.dueDiligenceProject = null;
-        this.parent = null;
-        this.children = null;
-        this.documents = null;
-        this.questions = null;
         this.obligatory = obligatory;
         this.identifier = identifier;
         this.name = name;
@@ -93,11 +91,6 @@ public class InformationGroup extends AbstractAggregateRoot<InformationGroup> {
     public InformationGroup() {}
 
     public InformationGroup(CreateInformationGroupCommand command) {
-        this.dueDiligenceProject = null;
-        this.parent = null;
-        this.children = null;
-        this.documents = null;
-        this.questions = null;
         this.obligatory = command.obligatory();
         this.identifier = command.identifier();
         this.name = command.name();
