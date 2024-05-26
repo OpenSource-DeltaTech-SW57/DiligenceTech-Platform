@@ -1,9 +1,10 @@
-package com.deltatech.diligencetech.platform.duediligence.application.internal.commandservices;
+package com.deltatech.diligencetech.platform.shared.application.internal.commandservices;
 
-import com.deltatech.diligencetech.platform.duediligence.domain.model.commands.CreateAgentCommand;
-import com.deltatech.diligencetech.platform.duediligence.domain.services.AgentCommandService;
-import com.deltatech.diligencetech.platform.duediligence.infrastructure.persistence.jpa.repositories.AgentRepository;
-import com.deltatech.diligencetech.platform.duediligence.shared.aggregates.Agent;
+import com.deltatech.diligencetech.platform.shared.domain.model.aggregates.Agent;
+import com.deltatech.diligencetech.platform.shared.domain.model.commands.CreateAgentCommand;
+import com.deltatech.diligencetech.platform.shared.domain.services.AgentCommandService;
+import com.deltatech.diligencetech.platform.shared.infrastructure.persistence.jpa.repositories.AgentRepository;
+import com.deltatech.diligencetech.platform.shared.domain.model.aggregates.Agent;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -24,8 +25,6 @@ public class AgentCommandServiceImpl implements AgentCommandService {
     }
     var agent = new Agent(command);
     var createdAgent = agentRepository.save(agent);
-    return Optional.of(agent);
+    return Optional.of(createdAgent);
   }
-
-
 }
