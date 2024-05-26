@@ -20,9 +20,9 @@ public class InformationGroup extends AbstractAggregateRoot<InformationGroup> {
     @Getter
     private Long id;
 
-    @Column(nullable = false)
-    @Getter
-    private boolean obligatory;
+        @Column(nullable = false)
+        @Getter
+        private boolean obligatory;
 
     @Column(nullable = false)
     @Getter
