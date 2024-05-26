@@ -38,7 +38,7 @@ public class Document extends AbstractAggregateRoot<Document> {
 
     protected Document() {}
 
-    protected Document(CreateDocumentCommand command) {
+    public Document(CreateDocumentCommand command) {
         this.fileName = command.fileName();
         this.fileUrl = command.fileUrl();
     }

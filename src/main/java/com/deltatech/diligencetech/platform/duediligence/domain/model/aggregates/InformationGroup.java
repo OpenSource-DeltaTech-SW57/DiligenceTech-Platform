@@ -88,7 +88,7 @@ public class InformationGroup extends AbstractAggregateRoot<InformationGroup> {
         this.buyStatus = buyStatus;
     }
 
-    public InformationGroup() {}
+    protected InformationGroup() {}
 
     public InformationGroup(CreateInformationGroupCommand command) {
         this.obligatory = command.obligatory();
