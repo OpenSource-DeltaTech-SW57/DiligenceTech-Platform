@@ -1,4 +1,4 @@
-package com.deltatech.diligencetech.platform.duediligence.shared.aggregates;
+package com.deltatech.diligencetech.platform.shared.domain.model.aggregates;
 
 import jakarta.persistence.*;
 import lombok.Getter;
