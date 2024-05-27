@@ -5,6 +5,7 @@ import com.deltatech.diligencetech.platform.qa.domain.model.commands.CreateAnswe
 
 import java.util.Optional;
 
+
 public interface AnswerCommandService {
     Optional<Answer> handle(CreateAnswerCommand command);
 }
