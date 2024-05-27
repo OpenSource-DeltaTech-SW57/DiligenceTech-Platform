@@ -49,10 +49,10 @@ public class Question extends AbstractAggregateRoot<Question> {
     private Date updatedAt;
 
 
-/*
-    private List<Answer> answers;
-    private Agent buySideAgent;
- */
+    /*
+        private List<Answer> answers;
+        private Agent buySideAgent;
+     */
     protected Question() {
     }
 
