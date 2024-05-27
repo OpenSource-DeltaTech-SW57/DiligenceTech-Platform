@@ -1,5 +1,7 @@
 package com.deltatech.diligencetech.platform.duediligence.domain.model.aggregates;
 
+import com.deltatech.diligencetech.platform.duediligence.domain.model.commands.CreateInformationGroupCommand;
+import com.deltatech.diligencetech.platform.qa.domain.model.aggregates.Question;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,13 +22,34 @@ public class InformationGroup extends AbstractAggregateRoot<InformationGroup> {
     @Getter
     private Long id;
 
-    @Column(nullable = false)
+    /*
+    // Relationships
+    @ManyToOne
     @Getter
-    private boolean obligatory;
+    //@JoinColumn
+    private DueDiligenceProject dueDiligenceProject;
+
+    @ManyToOne
+    @Getter
+    //@JoinColumn
+    private InformationGroup parent;
+
+    @OneToMany
+    @Getter
+    private List<InformationGroup> children;
+
+    @OneToMany
+    @Getter
+    private List<Document> documents;
+
+    @OneToMany
+    @Getter
+    private List<Question> questions;
+    */
 
     @Column(nullable = false)
     @Getter
-    private String groupIdentifier;
+    private String identifier;
 
     @Column(nullable = false)
     @Getter
@@ -34,15 +57,19 @@ public class InformationGroup extends AbstractAggregateRoot<InformationGroup> {
 
     @Column(nullable = false)
     @Getter
+    private String buyStatus;
+
+    @Column(nullable = false)
+    @Getter
+    private String sellStatus;
+
+    @Column(nullable = false)
+    @Getter
+    private boolean obligatory;
+
+    @Column(nullable = false)
+    @Getter
     private String priority;
-
-    @Column(nullable = false)
-    @Getter
-    private String buySideStatus;
-
-    @Column(nullable = false)
-    @Getter
-    private String sellSideStatus;
 
     @CreatedDate
     @Column(nullable = false)
@@ -52,11 +79,24 @@ public class InformationGroup extends AbstractAggregateRoot<InformationGroup> {
     @Column(nullable = false)
     private Date updatedAt;
 
-    // private List<InformationGroup> children;
-    // private List<Document> documents;
-    // private List<Question> questions;
+    public InformationGroup(boolean obligatory, String identifier, String name, String priority, String buyStatus, String sellStatus) {
+        this.obligatory = obligatory;
+        this.identifier = identifier;
+        this.name = name;
+        this.priority = priority;
+        this.sellStatus = sellStatus;
+        this.buyStatus = buyStatus;
+    }
 
-    // CONSTRUCTOR
     protected InformationGroup() {}
-    // METHODS
+
+    public InformationGroup(CreateInformationGroupCommand command) {
+        this.obligatory = command.obligatory();
+        this.identifier = command.identifier();
+        this.name = command.name();
+        this.priority = command.priority();
+        this.sellStatus = command.sellStatus();
+        this.buyStatus = command.buyStatus();
+    }
+
 }
