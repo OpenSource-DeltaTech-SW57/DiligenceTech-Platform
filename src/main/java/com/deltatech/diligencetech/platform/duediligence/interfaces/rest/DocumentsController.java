@@ -12,16 +12,15 @@ import com.deltatech.diligencetech.platform.duediligence.interfaces.rest.transfo
 import com.deltatech.diligencetech.platform.duediligence.interfaces.rest.transform.DocumentResourceFromEntityAssembler;
 import com.deltatech.diligencetech.platform.duediligence.interfaces.rest.transform.InformationGroupResourceFromEntityAssembler;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 
 import static org.springframework.http.HttpStatus.CREATED;
 
+@RestController
+@RequestMapping("/api/v1/documents")
 public class DocumentsController {
     private final DocumentQueryService documentQueryService;
     private final DocumentCommandService documentCommandService;
