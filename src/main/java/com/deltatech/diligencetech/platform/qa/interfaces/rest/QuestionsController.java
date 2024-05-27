@@ -1,6 +1,7 @@
 package com.deltatech.diligencetech.platform.qa.interfaces.rest;
 
 import com.deltatech.diligencetech.platform.qa.domain.model.aggregates.Question;
+import com.deltatech.diligencetech.platform.qa.domain.model.queries.GetAllQuestionsQuery;
 import com.deltatech.diligencetech.platform.qa.domain.model.queries.GetQuestionByIdQuery;
 import com.deltatech.diligencetech.platform.qa.domain.services.QuestionCommandService;
 import com.deltatech.diligencetech.platform.qa.domain.services.QuestionQueryService;
@@ -10,6 +11,7 @@ import com.deltatech.diligencetech.platform.qa.interfaces.rest.transform.Questio
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.springframework.http.HttpStatus.CREATED;
@@ -43,7 +45,11 @@ public class QuestionsController {
         var questionResource = QuestionResourceFromEntityAssembler.toResourceFromEntity(question.get());
         return ResponseEntity.ok(questionResource);
     }
-
-
-
+@GetMapping
+    public ResponseEntity<List<QuestionResource>> getAllQuestions(){
+        var getAllQuestionsQuery = new GetAllQuestionsQuery();
+        var questions = questionQueryService.handle(getAllQuestionsQuery);
+        var questionResources = questions.stream().map(QuestionResourceFromEntityAssembler::toResourceFromEntity).toList();
+        return ResponseEntity.ok(questionResources);
+    }
 }
