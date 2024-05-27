@@ -258,7 +258,7 @@ Inside `domain/model/aggregates`
     5. Every attribute aside of `@Id` must be decorated with `@Column(nullable = false)`
     6. Every value object attribute must be decorated with `@Embedded`
     7. Every collection attribute (datatype of `List`) must be decorated with `@ElementCollection`, or `@OneToMany` or `@ManyToMany`
-    8. If a date created attribute wants to be added, it must be decorated with `@DateCreated` and use `java.util.Date` (not java.sql.Date)
+    8. If a date created attribute wants to be added, it must be decorated with `@CreatedDate` and use `java.util.Date` (not java.sql.Date)
     9. If a last updated date attribute wants to be added, it must be decorated with `@LastModifiedDate` and use `java.util.Date` (not java.sql.Date)
     10. If an attribute has a very different name in the database use `@AttributeOverrides({ @AttributeOverride(name = "attribute_name", column = @Column(name ="database_name")) })`
     11. A value object is specially the attribute that will have many `@AttributeOverride` inside `@AttributeOverrides`
