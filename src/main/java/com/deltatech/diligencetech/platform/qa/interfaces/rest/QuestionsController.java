@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping
-//@Tag(name = "Questions", description = "Questions Management Endpoints")
+@RequestMapping("/api/v1/questions")
+
 public class QuestionsController {
     private final QuestionCommandService questionCommandService;
     private final QuestionQueryService questionQueryService;

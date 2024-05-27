@@ -1,5 +1,6 @@
 package com.deltatech.diligencetech.platform.qa.domain.model.aggregates;
 
+import com.deltatech.diligencetech.platform.qa.domain.model.commands.CreateQuestionCommand;
 import jakarta.persistence.*;
 import lombok.Getter;
 import org.aspectj.weaver.loadtime.Agent;
@@ -31,8 +32,12 @@ public class Question extends AbstractAggregateRoot<Question> {
 
     @Column(nullable = false)
     @Getter
-    private Integer number;
+    private int number;
 
+
+    @Column(nullable = false)
+    @Getter
+    private String content;
 
     @CreatedDate
     @Column(nullable = false)
@@ -48,4 +53,13 @@ public class Question extends AbstractAggregateRoot<Question> {
     private List<Answer> answers;
     private Agent buySideAgent;
  */
+    protected Question() {
+    }
+
+    public Question(CreateQuestionCommand command){
+        this.buySideStatus = command.buySideStatus();
+        this.sellSideStatus = command.sellSideStatus();
+        this.number = command.number();
+        this.content = command.content();
+    }
 }
