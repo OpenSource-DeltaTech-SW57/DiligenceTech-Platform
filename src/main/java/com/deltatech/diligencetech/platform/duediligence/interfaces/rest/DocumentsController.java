@@ -3,6 +3,7 @@ package com.deltatech.diligencetech.platform.duediligence.interfaces.rest;
 import com.deltatech.diligencetech.platform.duediligence.domain.model.aggregates.Document;
 import com.deltatech.diligencetech.platform.duediligence.domain.model.queries.GetAllDocumentsQuery;
 import com.deltatech.diligencetech.platform.duediligence.domain.model.queries.GetAllInformationGroupsQuery;
+import com.deltatech.diligencetech.platform.duediligence.domain.model.queries.GetDocumentByIdQuery;
 import com.deltatech.diligencetech.platform.duediligence.domain.services.DocumentCommandService;
 import com.deltatech.diligencetech.platform.duediligence.domain.services.DocumentQueryService;
 import com.deltatech.diligencetech.platform.duediligence.interfaces.rest.resources.DocumentResource;
@@ -12,6 +13,7 @@ import com.deltatech.diligencetech.platform.duediligence.interfaces.rest.transfo
 import com.deltatech.diligencetech.platform.duediligence.interfaces.rest.transform.InformationGroupResourceFromEntityAssembler;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -36,6 +38,15 @@ public class DocumentsController {
         return document.map(source -> new ResponseEntity<>(
                         DocumentResourceFromEntityAssembler.toResourceFromEntity(source), CREATED))
                 .orElseGet(() -> ResponseEntity.badRequest().build());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<DocumentResource> getDocumentById(@PathVariable Long id) {
+        var getDocumentByIdQuery = new GetDocumentByIdQuery(id);
+        var document = documentQueryService.handle(getDocumentByIdQuery);
+        if (document.isEmpty()) return ResponseEntity.notFound().build();
+        var documentResource = DocumentResourceFromEntityAssembler.toResourceFromEntity(document.get());
+        return ResponseEntity.ok(documentResource);
     }
 
     @GetMapping

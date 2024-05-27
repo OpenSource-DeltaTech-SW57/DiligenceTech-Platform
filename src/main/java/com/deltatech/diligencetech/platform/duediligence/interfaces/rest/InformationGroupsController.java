@@ -2,6 +2,7 @@ package com.deltatech.diligencetech.platform.duediligence.interfaces.rest;
 
 import com.deltatech.diligencetech.platform.duediligence.domain.model.aggregates.InformationGroup;
 import com.deltatech.diligencetech.platform.duediligence.domain.model.queries.GetAllInformationGroupsQuery;
+import com.deltatech.diligencetech.platform.duediligence.domain.model.queries.GetInformationGroupByIdQuery;
 import com.deltatech.diligencetech.platform.duediligence.domain.services.InformationGroupCommandService;
 import com.deltatech.diligencetech.platform.duediligence.domain.services.InformationGroupQueryService;
 import com.deltatech.diligencetech.platform.duediligence.interfaces.rest.resources.InformationGroupResource;
@@ -33,6 +34,15 @@ public class InformationGroupsController {
         return informationGroup.map(source -> new ResponseEntity<>(
                 InformationGroupResourceFromEntityAssembler.toResourceFromEntity(source), CREATED))
                 .orElseGet(() -> ResponseEntity.badRequest().build());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<InformationGroupResource> getInformationGroupById(@PathVariable Long id) {
+        var getInformationGroupByIdQuery = new GetInformationGroupByIdQuery(id);
+        var informationGroup = informationGroupQueryService.handle(getInformationGroupByIdQuery);
+        if (informationGroup.isEmpty()) return ResponseEntity.notFound().build();
+        var informationGroupResource = InformationGroupResourceFromEntityAssembler.toResourceFromEntity(informationGroup.get());
+        return ResponseEntity.ok(informationGroupResource);
     }
 
     @GetMapping
