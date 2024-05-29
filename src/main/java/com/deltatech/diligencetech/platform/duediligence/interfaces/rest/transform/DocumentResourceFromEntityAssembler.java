@@ -1,6 +1,6 @@
 package com.deltatech.diligencetech.platform.duediligence.interfaces.rest.transform;
 
-import com.deltatech.diligencetech.platform.duediligence.domain.model.aggregates.Document;
+import com.deltatech.diligencetech.platform.duediligence.domain.model.entities.Document;
 import com.deltatech.diligencetech.platform.duediligence.interfaces.rest.resources.DocumentResource;
 
 public class DocumentResourceFromEntityAssembler {
