@@ -1,4 +1,5 @@
 package com.deltatech.diligencetech.platform.shared.domain.model.entities;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;
