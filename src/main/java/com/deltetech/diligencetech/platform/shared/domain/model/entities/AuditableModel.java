@@ -1,4 +1,4 @@
-package com.deltetech.diligencetech.shared.domain.model.entities;
+package com.deltetech.diligencetech.platform.shared.domain.model.entities;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;
