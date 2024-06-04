@@ -1,5 +1,6 @@
 package com.deltatech.diligencetech.platform.communications.domain.model.aggregates;
 
+import com.deltatech.diligencetech.platform.shared.domain.model.aggregates.AuditableAbstractAggregateRoot;
 import com.deltatech.diligencetech.platform.communications.domain.model.valueobjects.NotificationContent;
 import com.deltatech.diligencetech.platform.communications.domain.model.valueobjects.NotificationType;
 import com.deltatech.diligencetech.platform.communications.domain.model.valueobjects.NotificationPublishedDate;
@@ -12,8 +13,12 @@ import org.apache.logging.log4j.util.Strings;
 public class Notification extends AuditableAbstractAggregateRoot<Notification>{
     
     @Embedded
-    private final NotificationContent notificationContent;
-    private final NotificationType notificationType;
+    private NotificationContent notificationContent;
+
+    @Embedded
+    private NotificationType notificationType;
+    
+    @Embedded
     private final NotificationPublishedDate notificationPublishedDate;
 
     public Notification(){
