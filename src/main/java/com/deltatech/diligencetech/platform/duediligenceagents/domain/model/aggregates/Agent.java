@@ -19,15 +19,12 @@ public class Agent extends AbstractAggregateRoot<Agent> {
     private Long id;
 
   @Embedded
-  @Getter
   private AgentRole agentRole;
 
   @Embedded
-  @Getter
   private Image image;
 
   @Embedded
-  @Getter
   private AgentData agentData;
 
   public Agent() {

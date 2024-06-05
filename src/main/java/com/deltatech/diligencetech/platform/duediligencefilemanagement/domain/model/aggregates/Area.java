@@ -4,31 +4,14 @@ import com.deltatech.diligencetech.platform.duediligencefilemanagement.domain.mo
 import com.deltatech.diligencetech.platform.shared.domain.model.aggregates.AuditableAbstractAggregateRoot;
 import jakarta.persistence.*;
 import lombok.Getter;
-import lombok.Setter;
 
 @Entity
-public class Folder extends AuditableAbstractAggregateRoot<Folder> {
+public class Area extends AuditableAbstractAggregateRoot<Area> {
     // particular attributes
     @Getter
     @Embedded
-    private FolderData folderData;
+    private AreaData areaData;
 
     @Embedded
-    private FilesList innerFiles;
-
-    @Column
-    @Getter
-    private FolderPriority priority;
-
-    @Column
-    @Getter
-    private FolderStatus buyStatus;
-
-    @Column
-    @Getter
-    private FolderStatus sellStatus;
-
-    @ManyToOne
-    @JoinColumn(name = "area_id")
-    private Area parent;
+    private FoldersList folders;
 }
