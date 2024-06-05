@@ -20,3 +20,10 @@ Remember:
 2. Configuration
 3. Modelling
 4. Endpoint
+
+---------
+
+Registrar nuevas dependencias en pom.xml (io.jsonwebtoken)
+
+1. jjwt-api (0.12.3)
+2. jjwt-jackson (0.12.3)
