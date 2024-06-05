@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public class AgentResourceFromEntityAssembler {
   public static AgentResource toResourceFromEntity(Agent entity) {
-    return new AgentResource(entity.getAgentData().code(), entity.getAgentData().email(), entity.getAgentData().username(), entity.getAgentData().password(), entity.getImage().imageUrl());
+    return new AgentResource(entity.getCode(), entity.getAgentData().email(), entity.getAgentData().username(), entity.getAgentData().password(), entity.getImage().imageUrl());
   }
 
 }

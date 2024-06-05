@@ -7,17 +7,16 @@ import com.deltatech.diligencetech.platform.duediligenceagents.domain.services.A
 import com.deltatech.diligencetech.platform.duediligenceagents.domain.services.AgentQueryService;
 import com.deltatech.diligencetech.platform.duediligenceagents.interfaces.rest.resources.AgentResource;
 import com.deltatech.diligencetech.platform.duediligenceagents.interfaces.rest.resources.CreateAgentResource;
-import com.deltatech.diligencetech.platform.duediligenceagents.interfaces.rest.resources.UpdateAgentResource;
+import com.deltatech.diligencetech.platform.duediligenceagents.interfaces.rest.resources.UpdateAgentUsernameResource;
 import com.deltatech.diligencetech.platform.duediligenceagents.interfaces.rest.transform.AgentResourceFromEntityAssembler;
 import com.deltatech.diligencetech.platform.duediligenceagents.interfaces.rest.transform.CreateAgentCommandFromResourceAssembler;
-import com.deltatech.diligencetech.platform.duediligenceagents.interfaces.rest.transform.UpdateAgentCommandFromResourceAssembler;
+import com.deltatech.diligencetech.platform.duediligenceagents.interfaces.rest.transform.UpdateAgentUsernameCommandFromResourceAssembler;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 
@@ -45,15 +44,15 @@ public class AgentController
   @PostMapping
   public ResponseEntity<AgentResource> createAgent(@RequestBody CreateAgentResource createAgentResource) {
     var createCourseCommand = CreateAgentCommandFromResourceAssembler.toCommandFromResource(createAgentResource);
-    var agentId = AgentCommandService.handle(createCourseCommand);
+    var agentId = agentCommandService.handle(createCourseCommand);
     if (agentId == 0L) {
       return ResponseEntity.badRequest().build();
     }
     var getAgentByIdQuery = new GetAgentByIdQuery(agentId);
-    var agent = AgentQueryService.handle(getAgentByIdQuery);
+    var agent = agentQueryService.handle(getAgentByIdQuery);
     if (agent.isEmpty()) return ResponseEntity.badRequest().build();
-    var courseResource = AgentResourceFromEntityAssembler.toResourceFromEntity(agent.get());
-    return new ResponseEntity<>(courseResource, HttpStatus.CREATED);
+    var agentResource = AgentResourceFromEntityAssembler.toResourceFromEntity(agent.get());
+    return new ResponseEntity<>(agentResource, HttpStatus.CREATED);
   }
 
   /**
@@ -66,7 +65,7 @@ public class AgentController
   @GetMapping("/{agentId}")
   public ResponseEntity<AgentResource> getAgentById(@PathVariable Long agentId) {
     var getAgentByIdQuery = new GetAgentByIdQuery(agentId);
-    var agent = AgentQueryService.handle(getAgentByIdQuery);
+    var agent = agentQueryService.handle(getAgentByIdQuery);
     if (agent.isEmpty()) return ResponseEntity.badRequest().build();
     var agentResource = AgentResourceFromEntityAssembler.toResourceFromEntity(agent.get());
     return ResponseEntity.ok(agentResource);
@@ -83,7 +82,7 @@ public class AgentController
     var getAllAgentsQuery = new GetAllAgentsQuery();
     var agents = agentQueryService.handle(getAllAgentsQuery);
     var agentResources = agents.stream().map(AgentResourceFromEntityAssembler::toResourceFromEntity).toList();
-    return ResponseEntity.ok((List<AgentResource>) agentResources);
+    return ResponseEntity.ok(agentResources);
   }
 
   /**
@@ -92,12 +91,12 @@ public class AgentController
    * @param agentId             the id of the course to be updated
    * @param updateAgentResource the resource containing the data for the course to be updated
    * @return the updated course resource
-    * @see UpdateAgentResource
+    * @see UpdateAgentUsernameResource
    * @see AgentResource
    */
-  @PutMapping("/{courseId}")
-  public ResponseEntity<AgentResource> updateCourse(@PathVariable Long agentId, @RequestBody UpdateAgentResource updateAgentResource) {
-    var updateAgentCommand = UpdateAgentCommandFromResourceAssembler.toCommandFromResource(agentId, new UpdateAgentResource());
+  @PutMapping("/{agentId}")
+  public ResponseEntity<AgentResource> updateAgent(@PathVariable Long agentId, @RequestBody UpdateAgentUsernameResource updateAgentResource) {
+    var updateAgentCommand = UpdateAgentUsernameCommandFromResourceAssembler.toCommandFromResource(agentId, updateAgentResource.username());
     var updatedAgent = agentCommandService.handle(updateAgentCommand);
     if (updatedAgent.isEmpty()) {
       return ResponseEntity.badRequest().build();

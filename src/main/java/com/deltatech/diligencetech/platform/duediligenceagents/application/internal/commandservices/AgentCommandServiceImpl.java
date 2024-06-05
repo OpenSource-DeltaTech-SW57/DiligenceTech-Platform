@@ -3,7 +3,7 @@ package com.deltatech.diligencetech.platform.duediligenceagents.application.inte
 import com.deltatech.diligencetech.platform.duediligenceagents.domain.model.aggregates.Agent;
 import com.deltatech.diligencetech.platform.duediligenceagents.domain.model.commands.CreateAgentCommand;
 import com.deltatech.diligencetech.platform.duediligenceagents.domain.model.commands.DeleteAgentCommand;
-import com.deltatech.diligencetech.platform.duediligenceagents.domain.model.commands.UpdateAgentCommand;
+import com.deltatech.diligencetech.platform.duediligenceagents.domain.model.commands.UpdateAgentUsernameCommand;
 import com.deltatech.diligencetech.platform.duediligenceagents.domain.services.AgentCommandService;
 import com.deltatech.diligencetech.platform.duediligenceagents.infrastructure.persistence.jpa.repositories.AgentRepository;
 import org.springframework.stereotype.Service;
@@ -34,27 +34,25 @@ public class AgentCommandServiceImpl implements AgentCommandService {
   }
 
   @Override
-  public Optional<Agent> handle(UpdateAgentCommand command) {
-    if (agentRepository.existsByCode(command.username(), command.id()))
-      throw new IllegalArgumentException("Course with same title already exists");
-    var result = courseRepository.findById(command.id());
-    if (result.isEmpty()) throw new IllegalArgumentException("Course does not exist");
-    var courseToUpdate = result.get();
+  public Optional<Agent> handle(UpdateAgentUsernameCommand command) {
+    var result = agentRepository.findById(command.id());
+    if (result.isEmpty()) throw new IllegalArgumentException("Agent does not exist");
+    var agentToUpdate = result.get();
     try {
-      var updatedCourse = courseRepository.save(courseToUpdate.updateInformation(command.title(), command.description()));
-      return Optional.of(updatedCourse);
+      var updatedAgent = agentRepository.save(agentToUpdate.updateUsername(command.username()));
+      return Optional.of(updatedAgent);
     } catch (Exception e) {
-      throw new IllegalArgumentException("Error while updating course: " + e.getMessage());
+      throw new IllegalArgumentException("Error while updating agent: " + e.getMessage());
     }
   }
 
   @Override
   public void handle(DeleteAgentCommand command) {
-    if (!agentRepository.existsById(command.agentId())) {
+    if (!agentRepository.existsById(command.id())) {
       throw new IllegalArgumentException("Agent does not exist");
     }
     try {
-      agentRepository.deleteById(command.agentId());
+      agentRepository.deleteById(command.id());
     } catch (Exception e) {
       throw new IllegalArgumentException("Error while deleting agent: " + e.getMessage());
     }

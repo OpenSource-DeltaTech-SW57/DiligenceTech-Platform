@@ -28,7 +28,9 @@ public class Agent extends AbstractAggregateRoot<Agent> {
   @Embedded
   private AgentData agentData;
 
-
+  @Column(unique = true)
+  @Getter
+  private String code;
 
   public Agent() {
    /* this.profileId = new ProfileId();*/
@@ -38,7 +40,13 @@ public class Agent extends AbstractAggregateRoot<Agent> {
 
 
   public Agent(CreateAgentCommand command) {
-    this.agentData = new AgentData(command.code(), command.email(), command.username(), command.password());
+    this.code = command.code();
+    this.agentData = new AgentData(command.email(), command.username(), command.password());
     this.image = new Image(command.imageUrl());
     }
+
+  public Agent updateUsername(String username) {
+   this.agentData = new AgentData(this.agentData.email(), username, this.agentData.password());
+   return this;
+  }
 }
