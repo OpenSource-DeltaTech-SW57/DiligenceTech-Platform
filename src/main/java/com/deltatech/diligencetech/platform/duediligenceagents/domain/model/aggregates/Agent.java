@@ -1,5 +1,6 @@
 package com.deltatech.diligencetech.platform.duediligenceagents.domain.model.aggregates;
 
+import com.deltatech.diligencetech.platform.duediligenceagents.domain.model.commands.CreateAgentCommand;
 import com.deltatech.diligencetech.platform.duediligenceagents.domain.model.valueobjects.AgentData;
 import com.deltatech.diligencetech.platform.duediligenceagents.domain.model.valueobjects.AgentRole;
 import com.deltatech.diligencetech.platform.duediligenceagents.domain.model.valueobjects.Image;
@@ -27,6 +28,8 @@ public class Agent extends AbstractAggregateRoot<Agent> {
   @Embedded
   private AgentData agentData;
 
+
+
   public Agent() {
    /* this.profileId = new ProfileId();*/
     this.agentRole = new AgentRole();
@@ -34,4 +37,8 @@ public class Agent extends AbstractAggregateRoot<Agent> {
     }
 
 
+  public Agent(CreateAgentCommand command) {
+    this.agentData = new AgentData(command.code(), command.email(), command.username(), command.password());
+    this.image = new Image(command.imageUrl());
+    }
 }

@@ -1,4 +1,6 @@
 package com.deltatech.diligencetech.platform.duediligenceagents.domain.model.commands;
 
-public record CreateAgentCommand(Long profileId, String agentRolName, String agentRolDescription, String rootImageProfileName, String rootImageProfileDescription) {
+public record CreateAgentCommand(String code, String email, String username, String password, String imageUrl) {
+
+
 }

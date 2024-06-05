@@ -1,3 +1,4 @@
 package com.deltatech.diligencetech.platform.duediligenceagents.domain.model.queries;
-public record GetAllAgentsQuery() {
+
+public record GetAgentByIdQuery(Long id) {
 }
