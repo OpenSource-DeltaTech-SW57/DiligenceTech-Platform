@@ -1,5 +1,6 @@
 package com.deltatech.diligencetech.platform.duediligencefilemanagement.domain.model.entities;
 
+import com.deltatech.diligencetech.platform.duediligencefilemanagement.domain.model.aggregates.Folder;
 import com.deltatech.diligencetech.platform.duediligencefilemanagement.domain.model.valueobjects.FileData;
 import com.deltatech.diligencetech.platform.shared.domain.model.entities.AuditableModel;
 import jakarta.persistence.*;
@@ -15,6 +16,10 @@ public class Document extends AuditableModel {
 
     @Embedded
     private FileData fileData;
+
+    @ManyToOne
+    @JoinColumn(name = "folder_id")
+    private Folder folder;
 
     // constructors
 

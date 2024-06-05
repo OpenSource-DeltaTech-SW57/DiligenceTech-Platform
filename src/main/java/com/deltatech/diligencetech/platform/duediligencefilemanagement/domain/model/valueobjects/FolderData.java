@@ -3,8 +3,8 @@ package com.deltatech.diligencetech.platform.duediligencefilemanagement.domain.m
 import jakarta.persistence.Embeddable;
 
 @Embeddable
-public record FolderData(String name) {
+public record FolderData(String name, Boolean obligatory) {
     public FolderData() {
-        this("");
+        this("", false);
     }
 }
