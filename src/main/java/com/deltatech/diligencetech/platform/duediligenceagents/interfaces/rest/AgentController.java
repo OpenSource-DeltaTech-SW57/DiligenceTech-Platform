@@ -1,6 +1,7 @@
 package com.deltatech.diligencetech.platform.duediligenceagents.interfaces.rest;
 
 import com.deltatech.diligencetech.platform.duediligenceagents.domain.model.commands.DeleteAgentCommand;
+import com.deltatech.diligencetech.platform.duediligenceagents.domain.model.queries.GetAgentByCodeQuery;
 import com.deltatech.diligencetech.platform.duediligenceagents.domain.model.queries.GetAgentByIdQuery;
 import com.deltatech.diligencetech.platform.duediligenceagents.domain.model.queries.GetAllAgentsQuery;
 import com.deltatech.diligencetech.platform.duediligenceagents.domain.services.AgentCommandService;
@@ -56,7 +57,7 @@ public class AgentController
   }
 
   /**
-   * Gets a course by its id.
+   * Gets an agent by its id.
    *
    * @param agentId the id of the course to be retrieved
    * @return the course resource with the given id
@@ -70,6 +71,23 @@ public class AgentController
     var agentResource = AgentResourceFromEntityAssembler.toResourceFromEntity(agent.get());
     return ResponseEntity.ok(agentResource);
   }
+
+  /*
+   * Gets an agent by its code.
+   *
+   * @param agentCode the id of the course to be retrieved
+   * @return the course resource with the given code
+   * @see AgentResource
+   *
+   * @GetMapping("/{agentCode}")
+  public ResponseEntity<AgentResource> getAgentByCode(@PathVariable String agentCode) {
+    var getAgentByCodeQuery = new GetAgentByCodeQuery(agentCode);
+    var agent = agentQueryService.handle(getAgentByCodeQuery);
+    if (agent.isEmpty()) return ResponseEntity.badRequest().build();
+    var agentResource = AgentResourceFromEntityAssembler.toResourceFromEntity(agent.get());
+    return ResponseEntity.ok(agentResource);
+  }
+   */
 
   /**
    * Gets all the courses.
