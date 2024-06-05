@@ -8,16 +8,14 @@ import org.springframework.data.domain.AbstractAggregateRoot;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.util.Date;
-import java.util.UUID;
 
 @EntityListeners(AuditingEntityListener.class)
 @MappedSuperclass
 public abstract class AuditableAbstractAggregateRoot<T extends AbstractAggregateRoot<T>> extends AbstractAggregateRoot<T>{
     @Getter
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(columnDefinition = "BINARY(16)")
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Getter
     @CreatedDate

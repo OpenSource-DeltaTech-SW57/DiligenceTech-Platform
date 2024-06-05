@@ -5,13 +5,13 @@ import jakarta.persistence.Embeddable;
 import java.util.Date;
 
 @Embeddable
-public record ProjectEndDate(Date projectEndDate) {
+public record ProjectEndDate(Date endDate) {
     public ProjectEndDate() {this(null);}
 
-    public Date getProjectEndDate() { return projectEndDate; }
+    public Date getProjectEndDate() { return endDate; }
 
     public ProjectEndDate {
-        if (projectEndDate == null){
+        if (endDate == null){
             throw new IllegalArgumentException("Project end date cannot be null");
         }
     }
