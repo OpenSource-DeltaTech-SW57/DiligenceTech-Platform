@@ -1,6 +1,6 @@
-package com.deltetech.diligencetech.platform.duediligenceprojectmanagement.domain.model.queries;
+package com.deltatech.diligencetech.platform.duediligenceprojectmanagement.domain.model.queries;
 
-import com.deltetech.diligencetech.platform.duediligenceprojectmanagement.domain.model.valueobjects.AgentRecordId;
+import com.deltatech.diligencetech.platform.duediligenceprojectmanagement.domain.model.valueobjects.AgentRecordId;
 
 public record GetProjectMemberItemByProjectIdAndAgentId(Long projectId, AgentRecordId agentId) {
 }

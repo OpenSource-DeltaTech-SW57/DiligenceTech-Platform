@@ -1,4 +1,4 @@
-package com.deltetech.diligencetech.platform.duediligenceprojectmanagement.domain.model.valueobjects;
+package com.deltatech.diligencetech.platform.duediligenceprojectmanagement.domain.model.valueobjects;
 
 import jakarta.persistence.Embeddable;
 

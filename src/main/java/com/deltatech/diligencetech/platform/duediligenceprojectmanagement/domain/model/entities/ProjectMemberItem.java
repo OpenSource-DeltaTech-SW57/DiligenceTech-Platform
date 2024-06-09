@@ -1,8 +1,8 @@
-package com.deltetech.diligencetech.platform.duediligenceprojectmanagement.domain.model.entities;
+package com.deltatech.diligencetech.platform.duediligenceprojectmanagement.domain.model.entities;
 
-import com.deltetech.diligencetech.platform.duediligenceprojectmanagement.domain.model.aggregates.DueDiligenceProject;
-import com.deltetech.diligencetech.platform.duediligenceprojectmanagement.domain.model.valueobjects.AgentRecordId;
-import com.deltetech.diligencetech.platform.shared.domain.model.entities.AuditableModel;
+import com.deltatech.diligencetech.platform.duediligenceprojectmanagement.domain.model.aggregates.Project;
+import com.deltatech.diligencetech.platform.duediligenceprojectmanagement.domain.model.valueobjects.AgentRecordId;
+import com.deltatech.diligencetech.platform.shared.domain.model.entities.AuditableModel;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -17,15 +17,15 @@ public class ProjectMemberItem extends AuditableModel {
     @ManyToOne
     @JoinColumn(name = "project_id")
     @NotNull
-    private DueDiligenceProject dueDiligenceProject;
+    private Project project;
 
     @Getter
     @Embedded
     @NotNull
     private AgentRecordId agentRecordId;
 
-    public ProjectMemberItem(DueDiligenceProject dueDiligenceProject, AgentRecordId agentRecordId) {
-        this.dueDiligenceProject = dueDiligenceProject;
+    public ProjectMemberItem(Project project, AgentRecordId agentRecordId) {
+        this.project = project;
         this.agentRecordId = agentRecordId;
     }
 

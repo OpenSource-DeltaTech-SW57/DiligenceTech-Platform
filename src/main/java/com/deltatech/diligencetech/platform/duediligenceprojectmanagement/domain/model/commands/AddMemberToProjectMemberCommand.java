@@ -1,6 +1,6 @@
-package com.deltetech.diligencetech.platform.duediligenceprojectmanagement.domain.model.commands;
+package com.deltatech.diligencetech.platform.duediligenceprojectmanagement.domain.model.commands;
 
-import com.deltetech.diligencetech.platform.duediligenceprojectmanagement.domain.model.valueobjects.AgentRecordId;
+import com.deltatech.diligencetech.platform.duediligenceprojectmanagement.domain.model.valueobjects.AgentRecordId;
 
 public record AddMemberToProjectMemberCommand(AgentRecordId agentId, Long projectId) {
 }

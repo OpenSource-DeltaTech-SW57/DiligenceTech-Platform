@@ -1,7 +1,7 @@
-package com.deltetech.diligencetech.platform.duediligenceprojectmanagement.domain.model.valueobjects;
+package com.deltatech.diligencetech.platform.duediligenceprojectmanagement.domain.model.valueobjects;
 
-import com.deltetech.diligencetech.platform.duediligenceprojectmanagement.domain.model.aggregates.DueDiligenceProject;
-import com.deltetech.diligencetech.platform.duediligenceprojectmanagement.domain.model.entities.ProjectMemberItem;
+import com.deltatech.diligencetech.platform.duediligenceprojectmanagement.domain.model.aggregates.Project;
+import com.deltatech.diligencetech.platform.duediligenceprojectmanagement.domain.model.entities.ProjectMemberItem;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.OneToMany;
@@ -12,17 +12,17 @@ import java.util.List;
 @Embeddable
 public class ProjectMember {
 
-    @OneToMany(mappedBy = "dueDiligenceProject", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
     private List<ProjectMemberItem> projectMemberItems;
 
     public ProjectMember() {
         this.projectMemberItems = new ArrayList<>();
     }
 
-    public void addProjectMemberItem(DueDiligenceProject dueDiligenceProject, AgentRecordId agentRecordId) {
+    public void addProjectMemberItem(Project project, AgentRecordId agentRecordId) {
         System.out.println("Adding item to project member");
-        ProjectMemberItem projectMemberItem = new ProjectMemberItem(dueDiligenceProject, agentRecordId);
-        System.out.println("Project Id" + projectMemberItem.getDueDiligenceProject().getId());
+        ProjectMemberItem projectMemberItem = new ProjectMemberItem(project, agentRecordId);
+        System.out.println("Project Id" + projectMemberItem.getProject().getId());
         System.out.println("Agent Id" + projectMemberItem.getAgentRecordId());
         projectMemberItems.add(projectMemberItem);
     }

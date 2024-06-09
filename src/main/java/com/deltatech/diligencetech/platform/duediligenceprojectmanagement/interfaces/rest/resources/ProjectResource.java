@@ -1,4 +1,4 @@
 package com.deltatech.diligencetech.platform.duediligenceprojectmanagement.interfaces.rest.resources;
 
-public record ProjectMemberItemResource(Long projectMemberItemId, Long projectId, String agentId) {
+public record ProjectResource(Long id, String name, String managerName, String status) {
 }
