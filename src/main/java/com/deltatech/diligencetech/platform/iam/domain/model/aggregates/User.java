@@ -25,7 +25,7 @@ public class User extends AuditableAbstractAggregateRoot<User> {
     private String password;
 
     @Getter
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),
