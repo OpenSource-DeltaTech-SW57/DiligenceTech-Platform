@@ -1,2 +1,14 @@
-package com.deltatech.diligencetech.platform.duediligencefilemanagement.domain.services;public interface FolderQueryService {
+package com.deltatech.diligencetech.platform.duediligencefilemanagement.domain.services;
+
+import com.deltatech.diligencetech.platform.duediligencefilemanagement.domain.model.aggregates.Area;
+import com.deltatech.diligencetech.platform.duediligencefilemanagement.domain.model.aggregates.Folder;
+import com.deltatech.diligencetech.platform.duediligencefilemanagement.domain.model.queries.*;
+
+import java.util.List;
+import java.util.Optional;
+
+public interface FolderQueryService {
+  Optional<Folder> handle(GetFolderByAreaIdQuery query);
+  Optional<Folder> handle(GetFolderByIdQuery query);
+  List<Folder> handle(GetAllFoldersQuery query);
 }
