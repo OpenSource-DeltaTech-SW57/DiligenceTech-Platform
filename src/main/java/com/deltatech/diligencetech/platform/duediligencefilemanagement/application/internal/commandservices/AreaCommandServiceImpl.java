@@ -1,5 +1,6 @@
 package com.deltatech.diligencetech.platform.duediligencefilemanagement.application.internal.commandservices;
 
+import com.deltatech.diligencetech.platform.duediligencefilemanagement.application.internal.outboundservices.acl.ExternalProjectService;
 import com.deltatech.diligencetech.platform.duediligencefilemanagement.domain.model.aggregates.Area;
 import com.deltatech.diligencetech.platform.duediligencefilemanagement.domain.model.commands.CreateAreaCommand;
 import com.deltatech.diligencetech.platform.duediligencefilemanagement.domain.model.commands.UpdateAreaNameCommand;
@@ -12,15 +13,22 @@ import java.util.Optional;
 @Service
 public class AreaCommandServiceImpl implements AreaCommandService {
   private final AreaRepository areaRepository;
+  private final ExternalProjectService externalProjectService;
 
-  public AreaCommandServiceImpl(AreaRepository areaRepository) {
+
+  public AreaCommandServiceImpl(AreaRepository areaRepository, ExternalProjectService externalProjectService) {
     this.areaRepository = areaRepository;
+    this.externalProjectService = externalProjectService;
   }
 
   @Override
   public Long handle(CreateAreaCommand command) {
     if (areaRepository.existsByName(command.name())) {
       throw new IllegalArgumentException("Area with the same name already exists");
+    }
+    if (command.projectId() != null) {
+      var projectId = externalProjectService.fetchProjectIdById(command.projectId());
+      if (projectId.isEmpty()) throw new IllegalArgumentException("Project does not exist");
     }
     var area = new Area(command);
     try {
@@ -43,4 +51,7 @@ public class AreaCommandServiceImpl implements AreaCommandService {
       throw new IllegalArgumentException("Error while updating area: " + e.getMessage());
     }
   }
+
+
+
 }

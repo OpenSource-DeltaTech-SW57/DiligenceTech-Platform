@@ -2,6 +2,7 @@ package com.deltatech.diligencetech.platform.profiles.interfaces.acl;
 
 import com.deltatech.diligencetech.platform.duediligencefilemanagement.domain.model.aggregates.Area;
 import com.deltatech.diligencetech.platform.profiles.domain.model.commands.CreateAgentCommand;
+import com.deltatech.diligencetech.platform.profiles.domain.model.queries.GetAgentByCodeQuery;
 import com.deltatech.diligencetech.platform.profiles.domain.model.queries.GetAgentByEmailQuery;
 import com.deltatech.diligencetech.platform.profiles.domain.model.queries.GetAgentByIdQuery;
 import com.deltatech.diligencetech.platform.profiles.domain.services.AgentCommandService;
@@ -28,14 +29,14 @@ public class AgentContextFacade {
   }
 
   /**
-   * Fetches the agent id by email
+   * Fetches the agent id by code
    *
-   * @param email the email
+   * @param code the code
    * @return the agent id
    */
-  public Long fetchAgentIdByEmail(String email) {
-    var getAgentByEmailQuery = new GetAgentByEmailQuery(email);
-    var agent = agentQueryService.handle(getAgentByEmailQuery);
+  public Long fetchAgentIdByCode(String code) {
+    var getAgentByCodeQuery = new GetAgentByCodeQuery(code);
+    var agent = agentQueryService.handle(getAgentByCodeQuery);
     if (agent.isEmpty()) return 0L;
     return agent.get().getId();
   }

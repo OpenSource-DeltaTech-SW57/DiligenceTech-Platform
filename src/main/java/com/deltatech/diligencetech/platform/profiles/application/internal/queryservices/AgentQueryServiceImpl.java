@@ -1,6 +1,7 @@
 package com.deltatech.diligencetech.platform.profiles.application.internal.queryservices;
 
 import com.deltatech.diligencetech.platform.profiles.domain.model.aggregates.Agent;
+import com.deltatech.diligencetech.platform.profiles.domain.model.queries.GetAgentByCodeQuery;
 import com.deltatech.diligencetech.platform.profiles.domain.model.queries.GetAgentByEmailQuery;
 import com.deltatech.diligencetech.platform.profiles.domain.model.queries.GetAgentByIdQuery;
 import com.deltatech.diligencetech.platform.profiles.domain.model.queries.GetAllAgentsQuery;
@@ -35,6 +36,11 @@ public class AgentQueryServiceImpl implements AgentQueryService{
   @Override
   public List<Agent> handle(GetAllAgentsQuery query) {
     return agentRepository.findAll();
+  }
+
+  @Override
+  public Optional<Agent> handle(GetAgentByCodeQuery query) {
+    return agentRepository.findByCode(query.code());
   }
 
 }
