@@ -1,4 +1,4 @@
 package com.deltatech.diligencetech.platform.duediligencefilemanagement.interfaces.rest.resources;
 
-public record AreaResource(Long id, String fileName) {
+public record CreateDocumentResource(Long projectId, String filename, String fileUrl) {
 }

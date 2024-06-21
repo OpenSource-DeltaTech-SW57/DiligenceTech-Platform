@@ -1,6 +1,5 @@
 package com.deltatech.diligencetech.platform.duediligencefilemanagement.infrastructure.persistence.jpa.repositories;
 
-import com.deltatech.diligencetech.platform.duediligenceagents.domain.model.aggregates.Agent;
 import com.deltatech.diligencetech.platform.duediligencefilemanagement.domain.model.aggregates.Area;
 import org.springframework.data.jpa.repository.JpaRepository;
 

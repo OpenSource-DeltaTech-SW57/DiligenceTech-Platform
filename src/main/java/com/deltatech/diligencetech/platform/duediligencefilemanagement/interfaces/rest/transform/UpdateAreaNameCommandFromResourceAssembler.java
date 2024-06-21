@@ -1,6 +1,5 @@
 package com.deltatech.diligencetech.platform.duediligencefilemanagement.interfaces.rest.transform;
 
-import com.deltatech.diligencetech.platform.duediligenceagents.domain.model.commands.UpdateAgentUsernameCommand;
 import com.deltatech.diligencetech.platform.duediligencefilemanagement.domain.model.commands.UpdateAreaNameCommand;
 
 public class UpdateAreaNameCommandFromResourceAssembler {

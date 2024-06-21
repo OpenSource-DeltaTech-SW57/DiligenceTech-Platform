@@ -5,7 +5,6 @@ import com.deltatech.diligencetech.platform.duediligencefilemanagement.domain.mo
 import com.deltatech.diligencetech.platform.duediligencefilemanagement.domain.model.queries.GetAreaByIdQuery;
 import com.deltatech.diligencetech.platform.duediligencefilemanagement.domain.model.queries.GetAreasByProjectIdQuery;
 
-import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 

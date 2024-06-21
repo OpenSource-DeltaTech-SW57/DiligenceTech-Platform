@@ -1,9 +1,5 @@
 package com.deltatech.diligencetech.platform.duediligencefilemanagement.domain.model.aggregates;
 
-import com.deltatech.diligencetech.platform.duediligenceagents.domain.model.aggregates.Agent;
-import com.deltatech.diligencetech.platform.duediligenceagents.domain.model.commands.CreateAgentCommand;
-import com.deltatech.diligencetech.platform.duediligenceagents.domain.model.valueobjects.AgentData;
-import com.deltatech.diligencetech.platform.duediligenceagents.domain.model.valueobjects.Image;
 import com.deltatech.diligencetech.platform.duediligencefilemanagement.domain.model.commands.CreateAreaCommand;
 import com.deltatech.diligencetech.platform.duediligencefilemanagement.domain.model.valueobjects.*;
 import com.deltatech.diligencetech.platform.shared.domain.model.aggregates.AuditableAbstractAggregateRoot;
