@@ -1,9 +1,7 @@
 package com.deltatech.diligencetech.platform.profiles.domain.model.aggregates;
 
 import com.deltatech.diligencetech.platform.profiles.domain.model.commands.CreateAgentCommand;
-import com.deltatech.diligencetech.platform.profiles.domain.model.valueobjects.AgentData;
 import com.deltatech.diligencetech.platform.profiles.domain.model.valueobjects.AgentRole;
-import com.deltatech.diligencetech.platform.profiles.domain.model.valueobjects.Image;
 import jakarta.persistence.*;
 import lombok.Getter;
 import org.springframework.data.domain.AbstractAggregateRoot;
@@ -20,11 +18,21 @@ public class Agent extends AbstractAggregateRoot<Agent> {
   @Embedded
   private AgentRole agentRole;
 
-  @Embedded
-  private Image image;
+  @Column
+  @Getter
+  private String imageUrl;
 
-  @Embedded
-  private AgentData agentData;
+  @Column
+  @Getter
+  private String email;
+
+  @Column
+  @Getter
+  private String password;
+
+  @Column
+  @Getter
+  private String username;
 
   @Column(unique = true)
   @Getter
@@ -33,18 +41,25 @@ public class Agent extends AbstractAggregateRoot<Agent> {
   public Agent() {
    /* this.profileId = new ProfileId();*/
     this.agentRole = new AgentRole();
-    this.image = new Image();
+    this.imageUrl = "";
+    this.email = "";
+    this.password = "";
+    this.username = "";
     }
 
 
   public Agent(CreateAgentCommand command) {
     this.code = command.code();
-    this.agentData = new AgentData(command.email(), command.username(), command.password());
-    this.image = new Image(command.imageUrl());
+    this.imageUrl = command.imageUrl();
+    this.email = command.email();
+    this.password = command.password();
+    this.username = command.username();
     }
 
+
+
   public Agent updateUsername(String username) {
-   this.agentData = new AgentData(this.agentData.email(), username, this.agentData.password());
+    this.username = username;
    return this;
   }
 }

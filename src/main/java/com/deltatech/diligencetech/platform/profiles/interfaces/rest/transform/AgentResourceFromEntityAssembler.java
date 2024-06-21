@@ -5,7 +5,7 @@ import com.deltatech.diligencetech.platform.profiles.interfaces.rest.resources.A
 
 public class AgentResourceFromEntityAssembler {
   public static AgentResource toResourceFromEntity(Agent entity) {
-    return new AgentResource(entity.getCode(), entity.getAgentData().email(), entity.getAgentData().username(), entity.getAgentData().password(), entity.getImage().imageUrl());
-  }
+    return new AgentResource(entity.getId().toString(), entity.getEmail(), entity.getUsername(), entity.getPassword(), entity.getImageUrl());
 
+}
 }

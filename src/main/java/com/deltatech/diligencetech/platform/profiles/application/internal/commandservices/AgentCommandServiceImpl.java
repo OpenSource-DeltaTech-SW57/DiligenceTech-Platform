@@ -21,8 +21,8 @@ public class AgentCommandServiceImpl implements AgentCommandService {
 
   @Override
   public Long handle(CreateAgentCommand command) {
-    if (agentRepository.existsByCode(command.code())){
-      throw new IllegalArgumentException("Agent with same code already exists");
+    if (agentRepository.existsByEmail(command.email())){
+      throw new IllegalArgumentException("Agent with same email already exists");
     }
     var agent = new Agent(command);
     try {

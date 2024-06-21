@@ -11,6 +11,4 @@ public interface AgentCommandService {
     Long handle(CreateAgentCommand command);
     void handle(DeleteAgentCommand command);
     Optional<Agent> handle(UpdateAgentUsernameCommand command);
-
-
 }
