@@ -1,18 +1,17 @@
 package com.deltatech.diligencetech.platform.communications.application.internal.outboundservices.acl;
 
 
-import com.deltatech.diligencetech.platform.profiles.domain.model.aggregates.Agent;
 import com.deltatech.diligencetech.platform.profiles.interfaces.acl.AgentContextFacade;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
-public class ExternalAgentService {
+public class ExternalAgentServiceForCommunications {
 
   private final AgentContextFacade agentContextFacade;
 
-  public ExternalAgentService(AgentContextFacade agentContextFacade) {
+  public ExternalAgentServiceForCommunications(AgentContextFacade agentContextFacade) {
     this.agentContextFacade = agentContextFacade;
   }
 
