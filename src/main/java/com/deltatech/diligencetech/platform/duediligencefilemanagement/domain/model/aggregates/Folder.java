@@ -11,9 +11,6 @@ import lombok.Setter;
 @Entity
 public class Folder extends AuditableAbstractAggregateRoot<Folder> {
     // particular attributes
-    @Getter
-    @Embedded
-    private FolderData folderData;
 
     @Embedded
     private FilesList innerFiles;
@@ -30,28 +27,41 @@ public class Folder extends AuditableAbstractAggregateRoot<Folder> {
     @Getter
     private FolderStatus sellStatus;
 
+    @Column
+    @Getter
+    private String name;
+
+
+
     @ManyToOne
+    @Getter
     @JoinColumn(name = "area_id")
     private Area parent;
 
     public Folder(CreateFolderCommand command) {
-        this.folderData = new FolderData(command.name(), command.obligatory());
         this.innerFiles = new FilesList();
         this.priority = FolderPriority.LOW;
         this.buyStatus = FolderStatus.NOT_STARTED;
         this.sellStatus = FolderStatus.NOT_STARTED;
+        this.name = command.name();
+
     }
 
+    public void insertParent(Area parent) {
+        this.parent = parent;
+    }
+
+
     public Folder() {
-        this.folderData = new FolderData();
         this.innerFiles = new FilesList();
         this.priority = FolderPriority.LOW;
         this.buyStatus = FolderStatus.NOT_STARTED;
         this.sellStatus = FolderStatus.NOT_STARTED;
+        this.name = "";
     }
 
     public Folder updateName(String name) {
-        this.folderData = new FolderData(name, this.folderData.obligatory());
+        this.name = name;
         return this;
     }
 }

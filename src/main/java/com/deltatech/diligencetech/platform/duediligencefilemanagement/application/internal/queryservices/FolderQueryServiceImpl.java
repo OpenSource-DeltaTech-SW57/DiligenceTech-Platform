@@ -7,27 +7,33 @@ import com.deltatech.diligencetech.platform.duediligencefilemanagement.domain.se
 import com.deltatech.diligencetech.platform.duediligencefilemanagement.domain.services.FolderQueryService;
 import com.deltatech.diligencetech.platform.duediligencefilemanagement.infrastructure.persistence.jpa.repositories.AreaRepository;
 import com.deltatech.diligencetech.platform.duediligencefilemanagement.infrastructure.persistence.jpa.repositories.FolderRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class FolderQueryServiceImpl implements FolderQueryService {
-  private final FolderQueryService folderQueryService;
   private final FolderRepository folderRepository;
+  private final AreaRepository areaRepository;
 
-  public FolderQueryServiceImpl(FolderQueryService folderQueryService, FolderRepository folderRepository) {
-    this.folderQueryService = folderQueryService;
+  public FolderQueryServiceImpl(FolderRepository folderRepository, AreaRepository areaRepository) {
     this.folderRepository = folderRepository;
+    this.areaRepository = areaRepository;
   }
 
+
   @Override
-  public Optional<Folder> handle(GetFolderByAreaIdQuery query) {
-    return folderRepository.findById(query.areaId());
+  public List<Folder> handle(GetFolderByAreaIdQuery query) {
+    var area = areaRepository.findById(query.areaId());
+    if(area.isEmpty()) throw new IllegalArgumentException("Area does not exist");
+    return folderRepository.findByParent(area.get());
+
   }
 
   @Override
   public Optional<Folder> handle(GetFolderByIdQuery query) {
-    return folderRepository.findByCode(query.folderId());
+    return folderRepository.findById(query.folderId());
   }
 
   @Override

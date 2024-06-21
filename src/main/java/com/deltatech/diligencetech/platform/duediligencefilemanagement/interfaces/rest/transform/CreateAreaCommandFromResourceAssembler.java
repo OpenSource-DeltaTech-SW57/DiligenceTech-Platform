@@ -7,6 +7,6 @@ import com.deltatech.diligencetech.platform.duediligencefilemanagement.interface
 
 public class CreateAreaCommandFromResourceAssembler {
   public static CreateAreaCommand toCommandFromResource(CreateAreaResource resource) {
-    return new CreateAreaCommand(resource.code(), resource.name(), resource.obligatory());
+    return new CreateAreaCommand(resource.projectId(), resource.name());
   }
 }

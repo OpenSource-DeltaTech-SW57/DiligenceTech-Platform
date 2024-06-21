@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface AreaQueryService {
-  Optional<Area> handle(GetAreasByProjectIdQuery query);
+  List<Area> handle(GetAreasByProjectIdQuery query);
   Optional<Area> handle(GetAreaByIdQuery query);
   List<Area> handle(GetAllAreasQuery query);
 

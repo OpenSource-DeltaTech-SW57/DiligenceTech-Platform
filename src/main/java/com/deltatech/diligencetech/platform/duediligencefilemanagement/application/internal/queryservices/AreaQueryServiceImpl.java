@@ -18,22 +18,21 @@ import java.util.Optional;
 @Service
 public class AreaQueryServiceImpl implements AreaQueryService {
 
-    private final AreaQueryService areaQueryService;
     private final AreaRepository areaRepository;
 
-    public AreaQueryServiceImpl(AreaQueryService areaQueryService, AreaRepository areaRepository) {
-        this.areaQueryService = areaQueryService;
-        this.areaRepository = areaRepository;
-    }
+  public AreaQueryServiceImpl(AreaRepository areaRepository) {
+    this.areaRepository = areaRepository;
+  }
 
-    @Override
-    public Optional<Area> handle(GetAreasByProjectIdQuery query) {
-        return areaRepository.findById(query.projectId());
+
+  @Override
+    public List<Area> handle(GetAreasByProjectIdQuery query) {
+        return areaRepository.findByProjectId(query.projectId());
     }
 
     @Override
     public Optional<Area> handle(GetAreaByIdQuery query) {
-        return areaRepository.findByCode(query.areaId());
+        return areaRepository.findById(query.areaId());
     }
 
     @Override

@@ -4,6 +4,6 @@ import com.deltatech.diligencetech.platform.duediligencefilemanagement.interface
 
 public class AreaResourceFromEntityAssembler {
   public static AreaResource toResourceFromEntity(Area entity) {
-    return new AreaResource(entity.getId(), entity.getAreaData().name(), entity.getAreaData().obligatory());
+    return new AreaResource(entity.getId(), entity.getProjectId(), entity.getName());
   }
 }

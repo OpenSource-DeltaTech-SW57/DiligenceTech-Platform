@@ -7,6 +7,6 @@ import com.deltatech.diligencetech.platform.duediligencefilemanagement.interface
 
 public class FolderResourceFromEntityAssembler {
   public static FolderResource toResourceFromEntity(Folder entity) {
-    return new FolderResource(entity.getId(), entity.getFolderData().name(), entity.getFolderData().obligatory());
+    return new FolderResource(entity.getId(), entity.getParent().getId(), entity.getName());
   }
 }

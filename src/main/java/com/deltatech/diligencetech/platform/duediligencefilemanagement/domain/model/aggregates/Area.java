@@ -12,31 +12,31 @@ import lombok.Getter;
 
 @Entity
 public class Area extends AuditableAbstractAggregateRoot<Area> {
-    // particular attributes
-    @Getter
-    @Embedded
-    private AreaData areaData;
 
-    @Column(unique = true)
-    @Getter
-    private String code;
 
     @Embedded
     private FoldersList folders;
 
+    @Column
+    @Getter
+    private Long projectId;
+
+    @Column
+    @Getter
+    private String name;
+
     public Area(CreateAreaCommand command) {
-        this.areaData = new AreaData(command.name(), command.obligatory());
+        this.projectId = command.projectId();
+        this.name = command.name();
         this.folders = new FoldersList();
-        this.code = String.valueOf(command.code());
     }
 
     public Area() {
-        this.areaData = new AreaData();
-        this.folders = new FoldersList();
+
     }
 
     public Area updateName(String name) {
-        this.areaData = new AreaData(name, this.areaData.obligatory());
+        this.name = name;
         return this;
     }
 }

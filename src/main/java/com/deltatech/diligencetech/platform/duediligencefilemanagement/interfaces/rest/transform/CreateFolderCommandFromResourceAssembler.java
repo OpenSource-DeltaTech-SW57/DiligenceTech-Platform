@@ -7,6 +7,6 @@ import com.deltatech.diligencetech.platform.duediligencefilemanagement.interface
 
 public class CreateFolderCommandFromResourceAssembler {
   public static CreateFolderCommand toCommandFromResource(CreateFolderResource resource) {
-    return new CreateFolderCommand( resource.code(), resource.name(), resource.obligatory());
+    return new CreateFolderCommand(resource.areaId(), resource.name());
   }
 }

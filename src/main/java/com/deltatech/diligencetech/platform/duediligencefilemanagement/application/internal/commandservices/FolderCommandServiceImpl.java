@@ -3,6 +3,7 @@ import com.deltatech.diligencetech.platform.duediligencefilemanagement.domain.mo
 import com.deltatech.diligencetech.platform.duediligencefilemanagement.domain.model.commands.CreateFolderCommand;
 import com.deltatech.diligencetech.platform.duediligencefilemanagement.domain.model.commands.UpdateFolderNameCommand;
 import com.deltatech.diligencetech.platform.duediligencefilemanagement.domain.services.FolderCommandService;
+import com.deltatech.diligencetech.platform.duediligencefilemanagement.infrastructure.persistence.jpa.repositories.AreaRepository;
 import com.deltatech.diligencetech.platform.duediligencefilemanagement.infrastructure.persistence.jpa.repositories.FolderRepository;
 import org.springframework.stereotype.Service;
 
@@ -11,17 +12,19 @@ import java.util.Optional;
 @Service
 public class FolderCommandServiceImpl implements FolderCommandService {
   private final FolderRepository folderRepository;
+  private final AreaRepository areaRepository;
 
-  public FolderCommandServiceImpl(FolderRepository folderRepository) {
+  public FolderCommandServiceImpl(FolderRepository folderRepository, AreaRepository areaRepository) {
     this.folderRepository = folderRepository;
+    this.areaRepository = areaRepository;
   }
 
   @Override
   public Long handle(CreateFolderCommand command) {
-    if (folderRepository.existsByCode(command.code())) {
-      throw new IllegalArgumentException("Folder with the same code already exists");
-    }
     var folder = new Folder(command);
+    var area = areaRepository.findById(command.areaId());
+    if (area.isEmpty()) throw new IllegalArgumentException("Area does not exist");
+    folder.insertParent(area.get());
     try {
       folderRepository.save(folder);
     } catch (Exception e) {

@@ -19,16 +19,16 @@ public class AreaCommandServiceImpl implements AreaCommandService {
 
   @Override
   public Long handle(CreateAreaCommand command) {
-    if (areaRepository.existsByCode(command.code())) {
-      throw new IllegalArgumentException("Area with same code already exists");
+    if (areaRepository.existsByName(command.name())) {
+      throw new IllegalArgumentException("Area with the same name already exists");
     }
-    var agent = new Area(command);
+    var area = new Area(command);
     try {
-      areaRepository.save(agent);
+      areaRepository.save(area);
     } catch (Exception e) {
       throw new IllegalArgumentException("Error while saving area: " + e.getMessage());
     }
-    return agent.getId();
+    return area.getId();
   }
 
   @Override

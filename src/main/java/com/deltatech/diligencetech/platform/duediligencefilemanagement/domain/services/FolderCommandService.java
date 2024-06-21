@@ -8,4 +8,5 @@ import java.util.Optional;
 public interface FolderCommandService {
   Long handle(CreateFolderCommand command);
   Optional<Folder> handle(UpdateFolderNameCommand command);
+
 }
