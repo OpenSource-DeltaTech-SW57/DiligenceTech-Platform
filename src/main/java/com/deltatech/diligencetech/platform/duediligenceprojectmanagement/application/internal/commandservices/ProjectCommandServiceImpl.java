@@ -76,7 +76,7 @@ public class ProjectCommandServiceImpl implements ProjectCommandService {
         }
         try {
             projectRepository.findById(command.projectId()).map(dueDiligenceProject -> {
-                dueDiligenceProject.addMemberToProjectMember(command.agentId());
+                dueDiligenceProject.addMemberToProjectMember(command.agentId(), command.agentEmail(), command.agentRole());
                 projectRepository.save(dueDiligenceProject);
                 System.out.println("Member added to Project Member");
                 return dueDiligenceProject;

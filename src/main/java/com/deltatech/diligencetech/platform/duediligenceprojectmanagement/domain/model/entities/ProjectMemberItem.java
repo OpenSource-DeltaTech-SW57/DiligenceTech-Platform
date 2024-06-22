@@ -1,7 +1,9 @@
 package com.deltatech.diligencetech.platform.duediligenceprojectmanagement.domain.model.entities;
 
 import com.deltatech.diligencetech.platform.duediligenceprojectmanagement.domain.model.aggregates.Project;
+import com.deltatech.diligencetech.platform.duediligenceprojectmanagement.domain.model.valueobjects.AgentEmail;
 import com.deltatech.diligencetech.platform.duediligenceprojectmanagement.domain.model.valueobjects.AgentRecordId;
+import com.deltatech.diligencetech.platform.duediligenceprojectmanagement.domain.model.valueobjects.AgentRole;
 import com.deltatech.diligencetech.platform.shared.domain.model.entities.AuditableModel;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -24,9 +26,21 @@ public class ProjectMemberItem extends AuditableModel {
     @NotNull
     private AgentRecordId agentRecordId;
 
-    public ProjectMemberItem(Project project, AgentRecordId agentRecordId) {
+    @Getter
+    @Embedded
+    @NotNull
+    private AgentEmail agentEmail;
+
+    @Getter
+    @Embedded
+    @NotNull
+    private AgentRole agentRole;
+
+    public ProjectMemberItem(Project project, AgentRecordId agentRecordId, AgentEmail agentEmail, AgentRole agentRole) {
         this.project = project;
         this.agentRecordId = agentRecordId;
+        this.agentEmail = agentEmail;
+        this.agentRole = agentRole;
     }
 
     public ProjectMemberItem() {

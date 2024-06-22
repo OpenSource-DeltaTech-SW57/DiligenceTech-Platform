@@ -19,9 +19,9 @@ public class ProjectMember {
         this.projectMemberItems = new ArrayList<>();
     }
 
-    public void addProjectMemberItem(Project project, AgentRecordId agentRecordId) {
+    public void addProjectMemberItem(Project project, AgentRecordId agentRecordId, AgentEmail agentEmail, AgentRole agentRole) {
         System.out.println("Adding item to project member");
-        ProjectMemberItem projectMemberItem = new ProjectMemberItem(project, agentRecordId);
+        ProjectMemberItem projectMemberItem = new ProjectMemberItem(project, agentRecordId, agentEmail, agentRole);
         System.out.println("Project Id" + projectMemberItem.getProject().getId());
         System.out.println("Agent Id" + projectMemberItem.getAgentRecordId());
         projectMemberItems.add(projectMemberItem);

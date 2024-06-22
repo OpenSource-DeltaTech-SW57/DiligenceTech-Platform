@@ -39,7 +39,7 @@ public class Agent extends AbstractAggregateRoot<Agent> {
   private String code;
 
   public Agent() {
-   /* this.profileId = new ProfileId();*/
+    this.code = "";
     this.agentRole = new AgentRole();
     this.imageUrl = "";
     this.email = "";
@@ -55,8 +55,6 @@ public class Agent extends AbstractAggregateRoot<Agent> {
     this.password = command.password();
     this.username = command.username();
     }
-
-
 
   public Agent updateUsername(String username) {
     this.username = username;

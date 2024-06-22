@@ -78,7 +78,7 @@ public class Project extends AuditableAbstractAggregateRoot<Project> {
         return this;
     }
 
-    public void addMemberToProjectMember(AgentRecordId agentId) {
-        this.projectMember.addProjectMemberItem(this, agentId);
+    public void addMemberToProjectMember(AgentRecordId agentId, AgentEmail agentEmail, AgentRole agentRole) {
+        this.projectMember.addProjectMemberItem(this, agentId, agentEmail, agentRole);
     }
 }
