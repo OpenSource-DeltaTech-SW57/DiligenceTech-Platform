@@ -1,11 +1,12 @@
 package com.deltatech.diligencetech.platform.communications.application.internal.queryservices;
 
+
 import com.deltatech.diligencetech.platform.communications.domain.model.aggregates.Notification;
 import com.deltatech.diligencetech.platform.communications.domain.model.queries.GetAllNotificationsQuery;
 import com.deltatech.diligencetech.platform.communications.domain.model.queries.GetNotificationByIdQuery;
+import com.deltatech.diligencetech.platform.communications.domain.model.queries.GetNotificationsByAgentIdQuery;
 import com.deltatech.diligencetech.platform.communications.domain.services.NotificationQueryService;
 import com.deltatech.diligencetech.platform.communications.infrastructure.persistence.jpa.repositories.NotificationRepository;
-import org.springframework.data.repository.support.Repositories;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,5 +29,10 @@ public class NotificationQueryServiceImpl implements NotificationQueryService {
     @Override
     public Optional<Notification> handle(GetNotificationByIdQuery query) {
         return notificationRepository.findById(query.notificationId());
+    }
+
+    @Override
+    public List<Notification> handle(GetNotificationsByAgentIdQuery query){
+        return notificationRepository.findByAgentId(query.agentId());
     }
 }

@@ -5,6 +5,6 @@ import com.deltatech.diligencetech.platform.communications.interfaces.rest.resou
 
 public class NotificationResourceFromEntityAssembler {
     public static NotificationResource toResourceFromEntity(Notification entity) {
-        return new NotificationResource(entity.getId(), entity.getNotificationData().type(), entity.getNotificationData().content());
+        return new NotificationResource(entity.getId(), entity.getAgentId(), entity.getType(), entity.getContent());
     }
 }

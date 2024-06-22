@@ -5,6 +5,6 @@ import com.deltatech.diligencetech.platform.communications.interfaces.rest.resou
 
 public class CreateNotificationCommandFromResourceAssembler {
     public static CreateNotificationCommand toCommandFromResource(CreateNotificationResource resource){
-        return new CreateNotificationCommand(resource.type(), resource.content());
+        return new CreateNotificationCommand( resource.agentId(), resource.type(), resource.content());
     }
 }
