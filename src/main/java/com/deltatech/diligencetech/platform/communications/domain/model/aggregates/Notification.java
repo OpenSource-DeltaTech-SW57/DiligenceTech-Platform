@@ -8,17 +8,42 @@ import jakarta.persistence.*;
 import lombok.Getter;
 
 
+@Getter
 @Entity
 public class Notification extends AuditableAbstractAggregateRoot<Notification> {
 
-  @Embedded
-  @Getter
-  private NotificationData notificationData;
+  //@Embedded
+  //@Getter
+  //private NotificationData notificationData;
 
-  public Notification() { }
+  @Column
+  @Getter
+  private Long agentId;
+
+
+  @Column
+  @Getter
+  private String type;
+
+
+
+  @Column
+  @Getter
+  private String content;
+
+
+
+
+  public Notification() {
+  }
+
+
+
 
   public Notification(CreateNotificationCommand command) {
-    this.notificationData = new NotificationData(command.type(),command.content());
+    this.agentId = command.agentId();
+    this.type = command.type();
+    this.content = command.content();
   }
 
 }

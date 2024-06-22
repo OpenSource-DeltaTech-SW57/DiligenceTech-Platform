@@ -2,4 +2,4 @@ package com.deltatech.diligencetech.platform.communications.domain.model.command
 
 import com.deltatech.diligencetech.platform.communications.domain.model.valueobjects.NotificationData;
 
-public record CreateNotificationCommand(String type, String content){}
+public record CreateNotificationCommand(Long agentId, String type, String content){}

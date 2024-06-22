@@ -1,4 +1,4 @@
 package com.deltatech.diligencetech.platform.communications.interfaces.rest.resources;
 
-public record CreateNotificationResource(String type, String content) {
+public record CreateNotificationResource(Long agentId, String type, String content) {
 }
