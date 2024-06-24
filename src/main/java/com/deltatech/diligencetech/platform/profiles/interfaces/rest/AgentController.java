@@ -1,6 +1,7 @@
 package com.deltatech.diligencetech.platform.profiles.interfaces.rest;
 
 import com.deltatech.diligencetech.platform.profiles.domain.model.commands.DeleteAgentCommand;
+import com.deltatech.diligencetech.platform.profiles.domain.model.queries.GetAgentByCodeQuery;
 import com.deltatech.diligencetech.platform.profiles.domain.model.queries.GetAgentByIdQuery;
 import com.deltatech.diligencetech.platform.profiles.domain.model.queries.GetAllAgentsQuery;
 import com.deltatech.diligencetech.platform.profiles.domain.services.AgentCommandService;
@@ -134,4 +135,14 @@ public class AgentController
     agentCommandService.handle(deleteAgentCommand);
     return ResponseEntity.ok("Course with given id successfully deleted");
   }
+
+  @GetMapping("/code/{agentCode}")
+  public ResponseEntity<AgentResource> getAgentByCode(@PathVariable String agentCode) {
+    var getAgentByIdCode = new GetAgentByCodeQuery(agentCode);
+    var agent = agentQueryService.handle(getAgentByIdCode);
+    if (agent.isEmpty()) return ResponseEntity.badRequest().build();
+    var agentResource = AgentResourceFromEntityAssembler.toResourceFromEntity(agent.get());
+    return ResponseEntity.ok(agentResource);
+  }
+
 }
