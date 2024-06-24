@@ -16,9 +16,11 @@ import java.util.Optional;
 public class ProjectCommandServiceImpl implements ProjectCommandService {
 
     private final ProjectRepository projectRepository;
+    private final ExternalAgentService externalAgentService;
 
-  public ProjectCommandServiceImpl(ProjectRepository projectRepository) {
+  public ProjectCommandServiceImpl(ProjectRepository projectRepository, ExternalAgentService externalAgentService) {
     this.projectRepository = projectRepository;
+    this.externalAgentService = externalAgentService;
   }
 
 
@@ -42,15 +44,14 @@ public class ProjectCommandServiceImpl implements ProjectCommandService {
         }
         var dueDiligenceProjectToUpdate = result.get();
         try {
-            var updatedDueDiligenceProject = projectRepository.save(dueDiligenceProjectToUpdate.updateProjectInformation(
-                    command.projectFullName(),
-                    command.managerFirstName(),
-                    command.managerLastName(),
-                    command.startDate(),
-                    command.endDate(),
-                    command.budget(),
-                    command.progress(),
-                    command.status()));
+            var updatedDueDiligenceProject = projectRepository.save(dueDiligenceProjectToUpdate.updateProjectInformation(command.projectFullName()));
+                    //command.managerFirstName(),
+                    //command.managerLastName(),
+                    //command.startDate(),
+                    //command.endDate(),
+                    //command.budget(),
+                    //command.progress(),
+                    //command.status()));
             return Optional.of(updatedDueDiligenceProject);
         } catch (Exception e) {
             throw new IllegalArgumentException("Error while updating due diligence project: " + e.getMessage());
@@ -73,6 +74,10 @@ public class ProjectCommandServiceImpl implements ProjectCommandService {
     public void handle(AddMemberToProjectMemberCommand command) {
         if(!projectRepository.existsById(command.projectId())) {
             throw new IllegalArgumentException("Due diligence project does not exist");
+        }
+        if(command.agentId().agentRecordId() != null) {
+            var agentId = externalAgentService.fetchAgentIdByCode(command.agentId().agentRecordId());
+            if(agentId.isEmpty()) throw new IllegalArgumentException("Project does not exist");
         }
         try {
             projectRepository.findById(command.projectId()).map(dueDiligenceProject -> {

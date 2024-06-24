@@ -40,8 +40,15 @@ public class ExternalProjectService {
      * @return projectId if created, empty otherwise
      */
 
-  public Optional<Long> createProject(String projectFullName, String managerFirstName, String managerLastName, String startDate, String endDate, Float budget, Long progress, String status) {
-    var testId = projectContextFacade.createProject(projectFullName, managerFirstName, managerLastName, startDate, endDate, budget, progress, status);
+  //old
+  //public Optional<Long> createProject(String projectFullName, String managerFirstName, String managerLastName, String startDate, String endDate, Float budget, Long progress, String status) {
+  //  var testId = projectContextFacade.createProject(projectFullName, managerFirstName, managerLastName, startDate, endDate, budget, progress, status);
+  //  if (testId == 0L) return Optional.empty();
+  //  return Optional.of(testId);
+  //}
+  //new
+  public Optional<Long> createProject(String projectFullName) {
+    var testId = projectContextFacade.createProject(projectFullName);
     if (testId == 0L) return Optional.empty();
     return Optional.of(testId);
   }

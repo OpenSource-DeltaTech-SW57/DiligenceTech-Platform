@@ -17,8 +17,18 @@ public class ProjectContextFacade {
     this.projectQueryService = projectQueryService;
   }
 
-  public Long createProject(String projectFullName, String managerFirstName, String managerLastName, String startDate, String endDate, Float budget, Long progress, String status) {
-    var createProjectCommand = new CreateProjectCommand(projectFullName, managerFirstName, managerLastName, startDate, endDate, budget, progress, status);
+  //old
+  //public Long createProject(String projectFullName, String managerFirstName, String managerLastName, String startDate, String endDate, Float budget, Long progress, String status) {
+  //  var createProjectCommand = new CreateProjectCommand(projectFullName, managerFirstName, managerLastName, startDate, endDate, budget, progress, status);
+  //  var projectId = projectCommandService.handle(createProjectCommand);
+  //  var getProjectByIdQuery = new GetProjectByIdQuery(projectId);
+  //  var project = projectQueryService.handle(getProjectByIdQuery);
+  //  if (project.isEmpty()) return 0L;
+  //  return project.get().getId();
+  //}
+  //new
+  public Long createProject(String projectFullName) {
+    var createProjectCommand = new CreateProjectCommand(projectFullName);
     var projectId = projectCommandService.handle(createProjectCommand);
     var getProjectByIdQuery = new GetProjectByIdQuery(projectId);
     var project = projectQueryService.handle(getProjectByIdQuery);

@@ -31,7 +31,6 @@ import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
       this.areaQueryService = areaQueryService;
     }
 
-
     /**
      * Creates a new course.
      * @param createAreaResource the resource containing the data for the course to be created
