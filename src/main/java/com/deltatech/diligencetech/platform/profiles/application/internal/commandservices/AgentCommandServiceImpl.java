@@ -3,6 +3,7 @@ package com.deltatech.diligencetech.platform.profiles.application.internal.comma
 import com.deltatech.diligencetech.platform.profiles.domain.model.aggregates.Agent;
 import com.deltatech.diligencetech.platform.profiles.domain.model.commands.CreateAgentCommand;
 import com.deltatech.diligencetech.platform.profiles.domain.model.commands.DeleteAgentCommand;
+import com.deltatech.diligencetech.platform.profiles.domain.model.commands.UpdateAgentBiographyAndProfilePicCommand;
 import com.deltatech.diligencetech.platform.profiles.domain.model.commands.UpdateAgentUsernameCommand;
 import com.deltatech.diligencetech.platform.profiles.domain.services.AgentCommandService;
 import com.deltatech.diligencetech.platform.profiles.infrastructure.persistence.jpa.repositories.AgentRepository;
@@ -57,4 +58,20 @@ public class AgentCommandServiceImpl implements AgentCommandService {
       throw new IllegalArgumentException("Error while deleting agent: " + e.getMessage());
     }
 
-  }}
+
+  }
+
+  @Override
+    public Optional<Agent> handle(UpdateAgentBiographyAndProfilePicCommand command) {
+        var result = agentRepository.findById(command.id());
+        if (result.isEmpty()) throw new IllegalArgumentException("Agent does not exist");
+        var agentToUpdate = result.get();
+        try {
+        var updatedAgent = agentRepository.save(agentToUpdate.updateBiographyAndProfilePic(command.biography(), command.imageUrl()));
+        return Optional.of(updatedAgent);
+        } catch (Exception e) {
+        throw new IllegalArgumentException("Error while updating agent: " + e.getMessage());
+        }
+    }
+
+}
