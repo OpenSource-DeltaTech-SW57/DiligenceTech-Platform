@@ -1,5 +1,6 @@
 package com.deltatech.diligencetech.platform.iam.application.internal.commandservices;
 
+import com.deltatech.diligencetech.platform.iam.application.internal.outboundservices.acl.ExternalAgentServiceForIam;
 import com.deltatech.diligencetech.platform.iam.application.internal.outboundservices.hashing.HashingService;
 import com.deltatech.diligencetech.platform.iam.application.internal.outboundservices.tokens.TokenService;
 import com.deltatech.diligencetech.platform.iam.domain.model.aggregates.User;
@@ -20,12 +21,14 @@ public class UserCommandServiceImpl implements UserCommandService {
     private final HashingService hashingService;
     private final TokenService tokenService;
     private final RoleRepository roleRepository;
+    private final ExternalAgentServiceForIam externalAgentServiceForIam;
 
-    public UserCommandServiceImpl(UserRepository userRepository, HashingService hashingService, TokenService tokenService, RoleRepository roleRepository) {
+    public UserCommandServiceImpl(UserRepository userRepository, HashingService hashingService, TokenService tokenService, RoleRepository roleRepository, ExternalAgentServiceForIam externalAgentServiceForIam) {
         this.userRepository = userRepository;
         this.hashingService = hashingService;
         this.tokenService = tokenService;
         this.roleRepository = roleRepository;
+        this.externalAgentServiceForIam = externalAgentServiceForIam;
     }
 
     @Override
@@ -36,6 +39,9 @@ public class UserCommandServiceImpl implements UserCommandService {
                 .orElseThrow(() -> new RuntimeException("Role not found"))).toList();
         var user = new User(command.username(), hashingService.encode(command.password()), roles);
         userRepository.save(user);
+        // Create profile of that user
+        externalAgentServiceForIam.createAgent(command.username(), command.username(), command.username(), "secret", "");
+        // return the iam user
         return userRepository.findByUsername(command.username());
     }
 
