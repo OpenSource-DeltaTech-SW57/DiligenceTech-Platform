@@ -13,6 +13,6 @@ public class SignUpCommandFromResourceAssembler {
                 : new ArrayList<Role>();
         System.out.print("Roles:");
         System.out.println(roles.getFirst().getName().name());
-        return new SignUpCommand(resource.username(), resource.password(), roles);
+        return new SignUpCommand(resource.username(), resource.email(), resource.password(), resource.firstname(), resource.lastName(), roles);
     }
 }

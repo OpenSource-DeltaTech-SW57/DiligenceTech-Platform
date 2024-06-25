@@ -24,6 +24,9 @@ public class AgentCommandServiceImpl implements AgentCommandService {
     if (agentRepository.existsByEmail(command.email())){
       throw new IllegalArgumentException("Agent with same email already exists");
     }
+    if(agentRepository.existsByUsername(command.username())) {
+      throw new IllegalArgumentException("Agent with same username already exists");
+    }
     var agent = new Agent(command);
     try {
       agentRepository.save(agent);

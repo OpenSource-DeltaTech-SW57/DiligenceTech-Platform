@@ -3,7 +3,7 @@ package com.deltatech.diligencetech.platform.iam.application.internal.queryservi
 import com.deltatech.diligencetech.platform.iam.domain.model.aggregates.User;
 import com.deltatech.diligencetech.platform.iam.domain.model.queries.GetAllUsersQuery;
 import com.deltatech.diligencetech.platform.iam.domain.model.queries.GetUserByIdQuery;
-import com.deltatech.diligencetech.platform.iam.domain.model.queries.GetUserByUsernameQuery;
+import com.deltatech.diligencetech.platform.iam.domain.model.queries.GetUserByEmailQuery;
 import com.deltatech.diligencetech.platform.iam.domain.services.UserQueryService;
 import com.deltatech.diligencetech.platform.iam.infrastructure.persistence.jpa.repositories.UserRepository;
 import org.springframework.stereotype.Service;
@@ -31,7 +31,7 @@ public class UserQueryServiceImpl implements UserQueryService {
     }
 
     @Override
-    public Optional<User> handle(GetUserByUsernameQuery query) {
-        return userRepository.findByUsername(query.username());
+    public Optional<User> handle(GetUserByEmailQuery query) {
+        return userRepository.findByEmail(query.email());
     }
 }

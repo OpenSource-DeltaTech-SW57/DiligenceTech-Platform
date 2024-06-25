@@ -7,6 +7,6 @@ import com.deltatech.diligencetech.platform.iam.interfaces.rest.resources.UserRe
 public class UserResourceFromEntityAssembler {
     public static UserResource toResourceFromEntity(User entity) {
         var roles = entity.getRoles().stream().map(Role::getStringName).toList();
-        return new UserResource(entity.getId(), entity.getUsername(), roles);
+        return new UserResource(entity.getId(), entity.getUserEmail(), roles);
     }
 }

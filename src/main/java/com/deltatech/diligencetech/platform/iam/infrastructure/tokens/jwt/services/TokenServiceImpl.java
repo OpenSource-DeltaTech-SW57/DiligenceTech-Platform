@@ -78,8 +78,8 @@ public class TokenServiceImpl implements BearerTokenService {
     }
 
     @Override
-    public String generateToken(String username) {
-        return buildTokenWithDefaultParameters(username);
+    public String generateToken(String email) {
+        return buildTokenWithDefaultParameters(email);
     }
 
     private boolean isTokenPresentIn(String authorizationParameter) {

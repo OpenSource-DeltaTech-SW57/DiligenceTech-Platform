@@ -5,6 +5,6 @@ import com.deltatech.diligencetech.platform.iam.interfaces.rest.resources.Authen
 
 public class AuthenticatedUserResourceFromEntityAssembler {
     public static AuthenticatedUserResource toResourceFromEntity(User user, String token) {
-        return new AuthenticatedUserResource(user.getId(), user.getUsername(), token);
+        return new AuthenticatedUserResource(user.getId(), user.getUserEmail(), token);
     }
 }

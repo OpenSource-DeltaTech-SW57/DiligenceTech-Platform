@@ -10,6 +10,7 @@ import java.util.Optional;
 @Repository
 public interface AgentRepository extends JpaRepository<Agent, Long> {
   Optional<Agent> findByEmail(String email);
-  Optional<Agent> findByCode(String code);
+  Optional<Agent> findByUsername(String username);
   boolean existsByEmail(String email);
+  boolean existsByUsername(String username);
 }

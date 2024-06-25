@@ -5,6 +5,6 @@ import com.deltatech.diligencetech.platform.iam.interfaces.rest.resources.SignIn
 
 public class SignInCommandFromResourceAssembler {
     public static SignInCommand fromResource(SignInResource resource) {
-        return new SignInCommand(resource.username(), resource.password());
+        return new SignInCommand(resource.email(), resource.password());
     }
 }

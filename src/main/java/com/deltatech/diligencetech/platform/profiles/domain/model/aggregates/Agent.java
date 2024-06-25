@@ -1,26 +1,27 @@
 package com.deltatech.diligencetech.platform.profiles.domain.model.aggregates;
 
 import com.deltatech.diligencetech.platform.profiles.domain.model.commands.CreateAgentCommand;
-import com.deltatech.diligencetech.platform.profiles.domain.model.valueobjects.AgentRole;
+import com.deltatech.diligencetech.platform.profiles.domain.model.valueobjects.AgentName;
+import com.deltatech.diligencetech.platform.shared.domain.model.aggregates.AuditableAbstractAggregateRoot;
 import jakarta.persistence.*;
 import lombok.Getter;
-import org.springframework.data.domain.AbstractAggregateRoot;
 
 @Getter
 @Entity
-public class Agent extends AbstractAggregateRoot<Agent> {
+public class Agent extends AuditableAbstractAggregateRoot<Agent> {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Getter
     private Long id;
 
-  @Embedded
-  private AgentRole agentRole;
-
   @Column
   @Getter
   private String imageUrl;
+
+
+  @Embedded
+  private AgentName name;
 
   @Column
   @Getter
@@ -28,36 +29,34 @@ public class Agent extends AbstractAggregateRoot<Agent> {
 
   @Column
   @Getter
-  private String password;
+  private String location;
 
   @Column
   @Getter
-  private String username;
+  private String password;
 
   @Column(unique = true)
   @Getter
-  private String code;
+  private String username;
 
   public Agent() {
-    this.code = "";
-    this.agentRole = new AgentRole();
-    this.imageUrl = "";
-    this.email = "";
-    this.password = "";
-    this.username = "";
     }
 
-
   public Agent(CreateAgentCommand command) {
-    this.code = command.code();
+    this.name = new AgentName(command.firstname(), command.lastName());
     this.imageUrl = command.imageUrl();
     this.email = command.email();
     this.password = command.password();
     this.username = command.username();
+    this.location = command.location();
     }
 
   public Agent updateUsername(String username) {
     this.username = username;
    return this;
+  }
+
+  public String getFullName() {
+    return name.getFullName();
   }
 }

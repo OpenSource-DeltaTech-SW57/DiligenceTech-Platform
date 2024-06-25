@@ -7,10 +7,10 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class ExternalAgentService {
+public class ExternalAgentIamService {
     private final AgentContextFacade agentContextFacade;
 
-    public ExternalAgentService(AgentContextFacade agentContextFacade) {
+    public ExternalAgentIamService(AgentContextFacade agentContextFacade) {
         this.agentContextFacade = agentContextFacade;
     }
 

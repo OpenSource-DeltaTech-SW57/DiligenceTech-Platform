@@ -1,9 +1,8 @@
 package com.deltatech.diligencetech.platform.profiles.interfaces.acl;
 
-import com.deltatech.diligencetech.platform.duediligencefilemanagement.domain.model.aggregates.Area;
 import com.deltatech.diligencetech.platform.profiles.domain.model.commands.CreateAgentCommand;
-import com.deltatech.diligencetech.platform.profiles.domain.model.queries.GetAgentByCodeQuery;
 import com.deltatech.diligencetech.platform.profiles.domain.model.queries.GetAgentByEmailQuery;
+import com.deltatech.diligencetech.platform.profiles.domain.model.queries.GetAgentByUsernameQuery;
 import com.deltatech.diligencetech.platform.profiles.domain.model.queries.GetAgentByIdQuery;
 import com.deltatech.diligencetech.platform.profiles.domain.services.AgentCommandService;
 import com.deltatech.diligencetech.platform.profiles.domain.services.AgentQueryService;
@@ -19,8 +18,8 @@ public class AgentContextFacade {
     this.agentQueryService = agentQueryService;
   }
 
-  public Long createAgent(String code, String email, String username, String password, String imageUrl) {
-    var createAgentCommand = new CreateAgentCommand(code, email, username, password, imageUrl);
+  public Long createAgent(String username, String email, String password, String firstname, String lastName) {
+    var createAgentCommand = new CreateAgentCommand(username, email, password, "src/images/file", firstname, lastName, "-");
     var agentId = agentCommandService.handle(createAgentCommand);
     var getAgentByIdQuery = new GetAgentByIdQuery(agentId);
     var agent = agentQueryService.handle(getAgentByIdQuery);
@@ -35,10 +34,31 @@ public class AgentContextFacade {
    * @return the agent id
    */
   public Long fetchAgentIdByCode(String code) {
-    var getAgentByCodeQuery = new GetAgentByCodeQuery(code);
+    var getAgentByCodeQuery = new GetAgentByUsernameQuery(code);
     var agent = agentQueryService.handle(getAgentByCodeQuery);
     if (agent.isEmpty()) return 0L;
     return agent.get().getId();
+  }
+
+  public Long fetchAgentIdByEmail(String email) {
+    var getAgentIdByEmailQuery = new GetAgentByEmailQuery(email);
+    var agent = agentQueryService.handle(getAgentIdByEmailQuery);
+    if (agent.isEmpty()) return 0L;
+    return agent.get().getId();
+  }
+
+  public String fetchUsernameByAgentId(Long id) {
+    var getUsernameByAgentId = new GetAgentByIdQuery(id);
+    var username = agentQueryService.handle(getUsernameByAgentId);
+    if(username.isEmpty()) return "";
+    return username.get().getUsername();
+  }
+
+  public String fetchEmailByAgentId(Long id) {
+    var getEmailByAgentId = new GetAgentByIdQuery(id);
+    var email = agentQueryService.handle(getEmailByAgentId);
+    if(email.isEmpty()) return "";
+    return email.get().getEmail();
   }
 
 }
