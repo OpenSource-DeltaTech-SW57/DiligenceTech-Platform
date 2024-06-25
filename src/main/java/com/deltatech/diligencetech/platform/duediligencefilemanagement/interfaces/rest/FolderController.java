@@ -2,6 +2,7 @@ package com.deltatech.diligencetech.platform.duediligencefilemanagement.interfac
 
 import com.deltatech.diligencetech.platform.duediligencefilemanagement.domain.model.queries.GetAllFoldersQuery;
 import com.deltatech.diligencetech.platform.duediligencefilemanagement.domain.model.queries.GetAllFoldersQuery;
+import com.deltatech.diligencetech.platform.duediligencefilemanagement.domain.model.queries.GetFolderByAreaIdQuery;
 import com.deltatech.diligencetech.platform.duediligencefilemanagement.domain.model.queries.GetFolderByIdQuery;
 import com.deltatech.diligencetech.platform.duediligencefilemanagement.domain.services.FolderCommandService;
 import com.deltatech.diligencetech.platform.duediligencefilemanagement.domain.services.FolderQueryService;
@@ -61,16 +62,15 @@ import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
     /**
      * Gets a folder by its id.
      *
-     * @param folderId the id of the course to be retrieved
+     * @param areaId the id of the course to be retrieved
      * @return the course resource with the given id
      * @see FolderResource
      */
-    @GetMapping("/{folderId}")
-    public ResponseEntity<FolderResource> getfolderById(@PathVariable Long folderId) {
-      var getfolderByIdQuery = new GetFolderByIdQuery(folderId);
-      var folder = folderQueryService.handle(getfolderByIdQuery);
-      if (folder.isEmpty()) return ResponseEntity.badRequest().build();
-      var folderResource = FolderResourceFromEntityAssembler.toResourceFromEntity(folder.get());
+    @GetMapping("/{areaId}")
+    public ResponseEntity<List<FolderResource>> getfolderByAreaId(@PathVariable Long areaId) {
+      var getFolderByAreaIdQuery = new GetFolderByAreaIdQuery(areaId);
+      var folders = folderQueryService.handle(getFolderByAreaIdQuery);
+      var folderResource = folders.stream().map(FolderResourceFromEntityAssembler::toResourceFromEntity).toList();
       return ResponseEntity.ok(folderResource);
     }
 

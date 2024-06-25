@@ -8,6 +8,7 @@ import com.deltatech.diligencetech.platform.duediligencefilemanagement.domain.se
 import com.deltatech.diligencetech.platform.duediligencefilemanagement.infrastructure.persistence.jpa.repositories.AreaRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -24,7 +25,8 @@ public class AreaCommandServiceImpl implements AreaCommandService {
   @Override
   public Long handle(CreateAreaCommand command) {
     if (areaRepository.existsByName(command.name())) {
-      throw new IllegalArgumentException("Area with the same name already exists");
+      if (Objects.equals(command.projectId(), areaRepository.findByName(command.name()).get().getProjectId()))
+        throw new IllegalArgumentException("Area with the same name in this project already exists");
     }
     if (command.projectId() != null) {
       var projectId = externalProjectService.fetchProjectIdById(command.projectId());

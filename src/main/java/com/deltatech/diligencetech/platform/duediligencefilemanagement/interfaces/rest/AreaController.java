@@ -1,6 +1,7 @@
 package com.deltatech.diligencetech.platform.duediligencefilemanagement.interfaces.rest;
 import com.deltatech.diligencetech.platform.duediligencefilemanagement.domain.model.queries.GetAllAreasQuery;
 import com.deltatech.diligencetech.platform.duediligencefilemanagement.domain.model.queries.GetAreaByIdQuery;
+import com.deltatech.diligencetech.platform.duediligencefilemanagement.domain.model.queries.GetAreasByProjectIdQuery;
 import com.deltatech.diligencetech.platform.duediligencefilemanagement.domain.services.AreaCommandService;
 import com.deltatech.diligencetech.platform.duediligencefilemanagement.domain.services.AreaQueryService;
 import com.deltatech.diligencetech.platform.duediligencefilemanagement.interfaces.rest.resources.AreaResource;
@@ -60,12 +61,11 @@ import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
      * @return the course resource with the given id
      * @see AreaResource
      */
-    @GetMapping("/{areaId}")
-    public ResponseEntity<AreaResource> getAreaById(@PathVariable Long areaId) {
-      var getAreaByIdQuery = new GetAreaByIdQuery(areaId);
-      var area = areaQueryService.handle(getAreaByIdQuery);
-      if (area.isEmpty()) return ResponseEntity.badRequest().build();
-      var areaResource = AreaResourceFromEntityAssembler.toResourceFromEntity(area.get());
+    @GetMapping("/{projectId}")
+    public ResponseEntity<List<AreaResource>> getAreaByProjectId(@PathVariable Long projectId) {
+      var getAreasByProjectIdQuery = new GetAreasByProjectIdQuery(projectId);
+      var areas = areaQueryService.handle(getAreasByProjectIdQuery);
+      var areaResource = areas.stream().map(AreaResourceFromEntityAssembler::toResourceFromEntity).toList();
       return ResponseEntity.ok(areaResource);
     }
 
