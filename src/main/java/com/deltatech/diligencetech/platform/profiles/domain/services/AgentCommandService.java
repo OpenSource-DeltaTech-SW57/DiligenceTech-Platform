@@ -14,5 +14,4 @@ public interface AgentCommandService {
     void handle(DeleteAgentCommand command);
     Optional<Agent> handle(UpdateAgentBiographyAndProfilePicCommand command);
     Optional<Agent> handle(UpdateAgentUsernameCommand command);
-
 }

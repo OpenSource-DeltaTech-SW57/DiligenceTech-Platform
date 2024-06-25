@@ -18,18 +18,10 @@ public class ProjectCommandServiceImpl implements ProjectCommandService {
     private final ProjectRepository projectRepository;
     private final ExternalAgentService externalAgentService;
 
-<<<<<<< HEAD
-  public ProjectCommandServiceImpl(ProjectRepository projectRepository, ExternalAgentService externalAgentService) {
-    this.projectRepository = projectRepository;
-    this.externalAgentService = externalAgentService;
-  }
-=======
     public ProjectCommandServiceImpl(ProjectRepository projectRepository, ExternalAgentService externalAgentService) {
         this.projectRepository = projectRepository;
         this.externalAgentService = externalAgentService;
     }
->>>>>>> 50c506ee37cf2ee0e4d7f65bf3b4f566d28ed2ef
-
 
     @Override
     public Long handle(CreateProjectCommand command) {
@@ -52,15 +44,6 @@ public class ProjectCommandServiceImpl implements ProjectCommandService {
         var dueDiligenceProjectToUpdate = result.get();
         try {
             var updatedDueDiligenceProject = projectRepository.save(dueDiligenceProjectToUpdate.updateProjectInformation(command.projectFullName()));
-<<<<<<< HEAD
-                    //command.managerFirstName(),
-                    //command.managerLastName(),
-                    //command.startDate(),
-                    //command.endDate(),
-                    //command.budget(),
-                    //command.progress(),
-                    //command.status()));
-=======
             //command.managerFirstName(),
             //command.managerLastName(),
             //command.startDate(),
@@ -68,7 +51,6 @@ public class ProjectCommandServiceImpl implements ProjectCommandService {
             //command.budget(),
             //command.progress(),
             //command.status()));
->>>>>>> 50c506ee37cf2ee0e4d7f65bf3b4f566d28ed2ef
             return Optional.of(updatedDueDiligenceProject);
         } catch (Exception e) {
             throw new IllegalArgumentException("Error while updating due diligence project: " + e.getMessage());

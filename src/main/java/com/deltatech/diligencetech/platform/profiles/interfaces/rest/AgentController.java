@@ -1,12 +1,7 @@
 package com.deltatech.diligencetech.platform.profiles.interfaces.rest;
 
 import com.deltatech.diligencetech.platform.profiles.domain.model.commands.DeleteAgentCommand;
-<<<<<<< HEAD
-import com.deltatech.diligencetech.platform.profiles.domain.model.commands.UpdateAgentBiographyAndProfilePicCommand;
-import com.deltatech.diligencetech.platform.profiles.domain.model.queries.GetAgentByCodeQuery;
-=======
 import com.deltatech.diligencetech.platform.profiles.domain.model.queries.GetAgentByEmailQuery;
->>>>>>> backup-personal
 import com.deltatech.diligencetech.platform.profiles.domain.model.queries.GetAgentByIdQuery;
 import com.deltatech.diligencetech.platform.profiles.domain.model.queries.GetAllAgentsQuery;
 import com.deltatech.diligencetech.platform.profiles.domain.services.AgentCommandService;

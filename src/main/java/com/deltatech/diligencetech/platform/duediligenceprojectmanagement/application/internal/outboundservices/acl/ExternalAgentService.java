@@ -47,16 +47,9 @@ public class ExternalAgentService {
     if(email.isBlank()) return Optional.empty();
     return Optional.of(email);
   }
-    /**
-     * Create an agent
-     *
-     * @param email the email
-     * @param username the username
-     * @return profileId if created, empty otherwise
-     */
-  public Optional<Long> createAgent(String username, String email, String firstname, String lastname) {
-    var agentId = agentContextFacade.createAgent(username, email, firstname, lastname);
-    if (agentId == 0L) return Optional.empty();
-    return Optional.of(agentId);
-  }
+  //public Optional<Long> createAgent(String username, String email, String firstname, String lastname) {
+  //  var agentId = agentContextFacade.createAgent(username, email, firstname, lastname);
+  //  if (agentId == 0L) return Optional.empty();
+  //  return Optional.of(agentId);
+  //}
 }

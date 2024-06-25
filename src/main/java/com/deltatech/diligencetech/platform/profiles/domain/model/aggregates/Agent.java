@@ -29,11 +29,7 @@ public class Agent extends AuditableAbstractAggregateRoot<Agent> {
 
   @Column
   @Getter
-<<<<<<< HEAD
   private String location;
-=======
-  private String biography;
->>>>>>> 50c506ee37cf2ee0e4d7f65bf3b4f566d28ed2ef
 
   @Column
   @Getter
@@ -46,15 +42,12 @@ public class Agent extends AuditableAbstractAggregateRoot<Agent> {
 
 
   public Agent() {
-<<<<<<< HEAD
-=======
-    this.code = "";
-    this.agentRole = new AgentRole();
+    this.name = new AgentName("", "");
     this.imageUrl = "";
     this.email = "";
     this.biography = "";
     this.username = "";
->>>>>>> 50c506ee37cf2ee0e4d7f65bf3b4f566d28ed2ef
+    this.location = "";
     }
 
   public Agent(CreateAgentCommand command) {
@@ -71,14 +64,13 @@ public class Agent extends AuditableAbstractAggregateRoot<Agent> {
    return this;
   }
 
-<<<<<<< HEAD
   public String getFullName() {
     return name.getFullName();
-=======
+  }
+
   public Agent updateBiographyAndProfilePic(String biography, String imageUrl) {
     this.biography = biography;
     this.imageUrl = imageUrl;
     return this;
->>>>>>> 50c506ee37cf2ee0e4d7f65bf3b4f566d28ed2ef
   }
 }
