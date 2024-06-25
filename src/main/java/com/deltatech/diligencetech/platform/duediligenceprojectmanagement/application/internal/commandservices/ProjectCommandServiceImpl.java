@@ -76,12 +76,14 @@ public class ProjectCommandServiceImpl implements ProjectCommandService {
             throw new IllegalArgumentException("Due diligence project does not exist");
         }
         if(command.agentId().agentRecordId() != null) {
-            var agentId = externalAgentService.fetchAgentIdByCode(command.agentId().agentRecordId());
-            if(agentId.isEmpty()) throw new IllegalArgumentException("Project does not exist");
+            var agentIdByCode = externalAgentService.fetchAgentIdByCode(command.agentId().agentRecordId());
+            if(agentIdByCode.isEmpty()) throw new IllegalArgumentException("Agent does not exist");
+            //if(!agentIdByCode.get().equals(agentIdByEmail.get())) throw new IllegalArgumentException("Agent does not exist");
         }
         try {
             projectRepository.findById(command.projectId()).map(dueDiligenceProject -> {
-                dueDiligenceProject.addMemberToProjectMember(command.agentId(), command.agentEmail(), command.agentRole());
+                //dueDiligenceProject.addMemberToProjectMember(command.agentId(), command.agentEmail(), command.agentRole());
+                dueDiligenceProject.addMemberToProjectMember(command.agentId(), command.agentRole());
                 projectRepository.save(dueDiligenceProject);
                 System.out.println("Member added to Project Member");
                 return dueDiligenceProject;

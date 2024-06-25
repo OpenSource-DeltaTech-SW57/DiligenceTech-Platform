@@ -45,7 +45,7 @@ public class Project extends AuditableAbstractAggregateRoot<Project> {
         this.projectMember = new ProjectMember();
     }
 
-    public Project(String projectFullName, String managerFirstName, String managerLastName, Date startDate, Date endDate, Float budget, Long progress, String status) {
+    public Project(String projectFullName) {
         this.name = new ProjectName(projectFullName);
         //this.managerName = new ProjectManagerName(managerFirstName, managerLastName);
         //this.startDate = new ProjectStartDate(startDate);
@@ -78,7 +78,11 @@ public class Project extends AuditableAbstractAggregateRoot<Project> {
         return this;
     }
 
-    public void addMemberToProjectMember(AgentRecordId agentId, AgentEmail agentEmail, AgentRole agentRole) {
-        this.projectMember.addProjectMemberItem(this, agentId, agentEmail, agentRole);
+    //public void addMemberToProjectMember(AgentRecordId agentId, AgentEmail agentEmail, AgentRole agentRole) {
+    //    this.projectMember.addProjectMemberItem(this, agentId, agentEmail, agentRole);
+    //}
+
+    public void addMemberToProjectMember(AgentRecordId agentId, AgentRole agentRole) {
+        this.projectMember.addProjectMemberItem(this, agentId, agentRole);
     }
 }

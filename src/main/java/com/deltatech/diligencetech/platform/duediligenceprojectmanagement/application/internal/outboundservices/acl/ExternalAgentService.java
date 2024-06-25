@@ -29,6 +29,24 @@ public class ExternalAgentService {
     return Optional.of(agentId);
   }
 
+
+  public Optional<Long>  fetchAgentIdByEmail(String email) {
+    var agentId = agentContextFacade.fetchAgentIdByCode(email);
+    if (agentId == 0L) return Optional.empty();
+    return Optional.of(agentId);
+  }
+
+  public Optional<String> fetchUsernameByAgentId(long id) {
+    var username = agentContextFacade.fetchUsernameByAgentId(id);
+    if(username.isBlank()) return Optional.empty();
+    return Optional.of(username);
+  }
+
+  public Optional<String> fetchEmailByAgentId(long id) {
+    var email = agentContextFacade.fetchEmailByAgentId(id);
+    if(email.isBlank()) return Optional.empty();
+    return Optional.of(email);
+  }
     /**
      * Create an agent
      *

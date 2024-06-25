@@ -5,5 +5,5 @@ package com.deltatech.diligencetech.platform.duediligenceprojectmanagement.inter
 //}
 
 //new
-public record ProjectResource(Long id, String name) {
+public record ProjectResource(Long id, String projectName) {
 }
