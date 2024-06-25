@@ -31,7 +31,6 @@ public class ExternalAgentServiceForCommunications {
   /**
    * Create an agent
    *
-   * @param code the code
    * @param email the email
    * @param username the username
    * @param password the password

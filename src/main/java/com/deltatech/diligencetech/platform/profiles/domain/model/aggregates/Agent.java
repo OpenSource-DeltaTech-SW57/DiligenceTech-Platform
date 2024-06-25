@@ -28,7 +28,7 @@ public class Agent extends AbstractAggregateRoot<Agent> {
 
   @Column
   @Getter
-  private String password;
+  private String biography;
 
   @Column
   @Getter
@@ -38,12 +38,14 @@ public class Agent extends AbstractAggregateRoot<Agent> {
   @Getter
   private String code;
 
+
+
   public Agent() {
-   /* this.profileId = new ProfileId();*/
+    this.code = "";
     this.agentRole = new AgentRole();
     this.imageUrl = "";
     this.email = "";
-    this.password = "";
+    this.biography = "";
     this.username = "";
     }
 
@@ -52,14 +54,18 @@ public class Agent extends AbstractAggregateRoot<Agent> {
     this.code = command.code();
     this.imageUrl = command.imageUrl();
     this.email = command.email();
-    this.password = command.password();
+    this.biography = command.biography();
     this.username = command.username();
     }
-
-
 
   public Agent updateUsername(String username) {
     this.username = username;
    return this;
+  }
+
+  public Agent updateBiographyAndProfilePic(String biography, String imageUrl) {
+    this.biography = biography;
+    this.imageUrl = imageUrl;
+    return this;
   }
 }

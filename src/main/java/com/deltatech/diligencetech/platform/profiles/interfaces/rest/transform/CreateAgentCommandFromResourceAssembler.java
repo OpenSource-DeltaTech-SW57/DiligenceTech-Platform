@@ -5,6 +5,6 @@ import com.deltatech.diligencetech.platform.profiles.interfaces.rest.resources.C
 
 public class CreateAgentCommandFromResourceAssembler {
     public static CreateAgentCommand toCommandFromResource(CreateAgentResource resource) {
-        return new CreateAgentCommand(resource.id(), resource.email(), resource.username(), resource.password(), resource.image());
+        return new CreateAgentCommand(resource.code(), resource.email(), resource.username(), resource.biography(), resource.image());
     }
 }

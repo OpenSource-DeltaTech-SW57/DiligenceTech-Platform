@@ -5,6 +5,9 @@ import com.deltatech.diligencetech.platform.duediligenceprojectmanagement.interf
 
 public class ProjectResourceFromEntityAssembler {
     public static ProjectResource toResourceFromEntity(Project entity) {
-        return new ProjectResource(entity.getId(), entity.getName().projectFullName(), entity.getManagerName().getProjectManagerFullName(), entity.getStatus().getProjectStatusName());
+        //old
+        //return new ProjectResource(entity.getId(), entity.getName().projectFullName(), getProjectManagerFullName(), entity.getStatus().getProjectStatusName());
+        //new
+        return new ProjectResource(entity.getId(), entity.getName().projectFullName());
     }
 }

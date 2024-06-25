@@ -19,8 +19,8 @@ public class AgentContextFacade {
     this.agentQueryService = agentQueryService;
   }
 
-  public Long createAgent(String code, String email, String username, String password, String imageUrl) {
-    var createAgentCommand = new CreateAgentCommand(code, email, username, password, imageUrl);
+  public Long createAgent(String code, String email, String username, String biography, String imageUrl) {
+    var createAgentCommand = new CreateAgentCommand(code, email, username, biography, imageUrl);
     var agentId = agentCommandService.handle(createAgentCommand);
     var getAgentByIdQuery = new GetAgentByIdQuery(agentId);
     var agent = agentQueryService.handle(getAgentByIdQuery);

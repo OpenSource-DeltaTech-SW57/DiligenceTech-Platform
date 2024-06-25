@@ -4,10 +4,8 @@ package com.deltatech.diligencetech.platform.communications.domain.model.aggrega
 import com.deltatech.diligencetech.platform.communications.domain.model.valueobjects.AnswersList;
 import com.deltatech.diligencetech.platform.communications.domain.model.valueobjects.MessageData;
 import com.deltatech.diligencetech.platform.shared.domain.model.aggregates.AuditableAbstractAggregateRoot;
-import jakarta.persistence.Embedded;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
+import lombok.Getter;
 
 @Entity
 public class Message extends AuditableAbstractAggregateRoot<Message> {
@@ -15,8 +13,17 @@ public class Message extends AuditableAbstractAggregateRoot<Message> {
     @Embedded
     private AnswersList answers;
 
-    @Embedded
-    private MessageData messageData;
+    @Column
+    @Getter
+    private String senderId;
+
+    @Column
+    @Getter
+    private String receiverId;
+
+    @Column
+    @Getter
+    private String content;
 
     @ManyToOne
     @JoinColumn(name = "question_id")
