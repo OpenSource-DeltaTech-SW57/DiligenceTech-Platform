@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+
 @Service
 public class AgentCommandServiceImpl implements AgentCommandService {
 
@@ -60,21 +61,20 @@ public class AgentCommandServiceImpl implements AgentCommandService {
     } catch (Exception e) {
       throw new IllegalArgumentException("Error while deleting agent: " + e.getMessage());
     }
-
-
   }
 
   @Override
-    public Optional<Agent> handle(UpdateAgentBiographyAndProfilePicCommand command) {
-        var result = agentRepository.findById(command.id());
-        if (result.isEmpty()) throw new IllegalArgumentException("Agent does not exist");
-        var agentToUpdate = result.get();
-        try {
-        var updatedAgent = agentRepository.save(agentToUpdate.updateBiographyAndProfilePic(command.biography(), command.imageUrl()));
-        return Optional.of(updatedAgent);
-        } catch (Exception e) {
-        throw new IllegalArgumentException("Error while updating agent: " + e.getMessage());
-        }
+  public Optional<Agent> handle(UpdateAgentBiographyAndProfilePicCommand command) {
+    var result = agentRepository.findById(command.id());
+    if (result.isEmpty()) throw new IllegalArgumentException("Agent does not exist");
+    var agentToUpdate = result.get();
+    try {
+      var updatedAgent = agentRepository.save(agentToUpdate.updateBiographyAndProfilePic(command.biography(), command.imageUrl()));
+      return Optional.of(updatedAgent);
+    } catch (Exception e) {
+      throw new IllegalArgumentException("Error while updating agent: " + e.getMessage());
     }
+  }
 
-}
+
+  }

@@ -23,6 +23,7 @@ import java.util.List;
 
 import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 
+
 @RestController
 @RequestMapping(value = "/api/v1/agents", produces = APPLICATION_JSON_VALUE)
 @Tag(name = "Agents", description = "Agents Management Endpoints")
@@ -121,7 +122,7 @@ public class AgentController
    * @param agentId             the id of the course to be updated
    * @param updateAgentResource the resource containing the data for the course to be updated
    * @return the updated course resource
-    * @see UpdateAgentUsernameResource
+   * @see UpdateAgentUsernameResource
    * @see AgentResource
    */
   @PutMapping("/{agentId}")
@@ -147,25 +148,4 @@ public class AgentController
     agentCommandService.handle(deleteAgentCommand);
     return ResponseEntity.ok("Course with given id successfully deleted");
   }
-
-  @GetMapping("/code/{agentCode}")
-  public ResponseEntity<AgentResource> getAgentByCode(@PathVariable String agentCode) {
-    var getAgentByIdCode = new GetAgentByCodeQuery(agentCode);
-    var agent = agentQueryService.handle(getAgentByIdCode);
-    if (agent.isEmpty()) return ResponseEntity.badRequest().build();
-    var agentResource = AgentResourceFromEntityAssembler.toResourceFromEntity(agent.get());
-    return ResponseEntity.ok(agentResource);
-  }
-
-  @PutMapping("/{agentId}/biography")
-  public ResponseEntity<AgentResource> updateAgentBiography(@PathVariable Long agentId, @RequestBody UpdateAgentBiographyAndProfilePicResource updateAgentBiographyAndProfilePicResource) {
-    var updateAgentCommand = UpdateAgentBiographyAndPicCommandFromResourceAssembler.toCommandFromResource(agentId, updateAgentBiographyAndProfilePicResource);
-    var updatedAgent = agentCommandService.handle(updateAgentCommand);
-    if (updatedAgent.isEmpty()) {
-      return ResponseEntity.badRequest().build();
-    }
-    var agentResource = AgentResourceFromEntityAssembler.toResourceFromEntity(updatedAgent.get());
-    return ResponseEntity.ok(agentResource);
-  }
-
 }

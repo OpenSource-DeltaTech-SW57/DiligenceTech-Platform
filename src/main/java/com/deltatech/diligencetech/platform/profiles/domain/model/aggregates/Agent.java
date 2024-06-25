@@ -6,6 +6,7 @@ import com.deltatech.diligencetech.platform.shared.domain.model.aggregates.Audit
 import jakarta.persistence.*;
 import lombok.Getter;
 
+
 @Getter
 @Entity
 public class Agent extends AuditableAbstractAggregateRoot<Agent> {
@@ -13,7 +14,7 @@ public class Agent extends AuditableAbstractAggregateRoot<Agent> {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Getter
-    private Long id;
+  private Long id;
 
   @Column
   @Getter
@@ -39,16 +40,8 @@ public class Agent extends AuditableAbstractAggregateRoot<Agent> {
   @Getter
   private String username;
 
-
-
   public Agent() {
-    this.name = new AgentName("", "");
-    this.imageUrl = "";
-    this.email = "";
-    this.biography = "";
-    this.username = "";
-    this.location = "";
-    }
+  }
 
   public Agent(CreateAgentCommand command) {
     this.name = new AgentName(command.firstname(), command.lastName());
@@ -57,11 +50,11 @@ public class Agent extends AuditableAbstractAggregateRoot<Agent> {
     this.biography = command.biography();
     this.username = command.username();
     this.location = command.location();
-    }
+  }
 
   public Agent updateUsername(String username) {
     this.username = username;
-   return this;
+    return this;
   }
 
   public String getFullName() {

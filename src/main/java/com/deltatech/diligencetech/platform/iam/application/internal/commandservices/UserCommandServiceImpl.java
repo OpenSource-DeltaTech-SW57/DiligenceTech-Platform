@@ -1,7 +1,6 @@
 package com.deltatech.diligencetech.platform.iam.application.internal.commandservices;
 
 import com.deltatech.diligencetech.platform.iam.application.internal.outboundservices.acl.ExternalAgentIamService;
-import com.deltatech.diligencetech.platform.iam.application.internal.outboundservices.acl.ExternalAgentServiceForIam;
 import com.deltatech.diligencetech.platform.iam.application.internal.outboundservices.hashing.HashingService;
 import com.deltatech.diligencetech.platform.iam.application.internal.outboundservices.tokens.TokenService;
 import com.deltatech.diligencetech.platform.iam.domain.model.aggregates.User;
@@ -23,22 +22,20 @@ public class UserCommandServiceImpl implements UserCommandService {
     private final TokenService tokenService;
     private final RoleRepository roleRepository;
     private final ExternalAgentIamService externalAgentIamService;
-    private final ExternalAgentServiceForIam externalAgentServiceForIam;
 
-    public UserCommandServiceImpl(UserRepository userRepository, HashingService hashingService, TokenService tokenService, RoleRepository roleRepository, ExternalAgentServiceForIam externalAgentServiceForIam, ExternalAgentIamService externalAgentIamService) {
+    public UserCommandServiceImpl(UserRepository userRepository, HashingService hashingService, TokenService tokenService, RoleRepository roleRepository, ExternalAgentIamService externalAgentIamService) {
         this.userRepository = userRepository;
         this.hashingService = hashingService;
         this.tokenService = tokenService;
         this.roleRepository = roleRepository;
         this.externalAgentIamService = externalAgentIamService;
-        this.externalAgentServiceForIam = externalAgentServiceForIam;
     }
 
     @Override
     public Optional<User> handle(SignUpCommand command) {
         var agentId = externalAgentIamService.fetchAgentIdByEmail(command.email());
-        if(agentId.isEmpty()) {
-            agentId = externalAgentIamService.createAgent(command.username(), command.email(),  command.firstname(), command.lastName());
+        if (agentId.isEmpty()) {
+            agentId = externalAgentIamService.createAgent(command.username(), command.email(), command.firstname(), command.lastName());
         } else {
             userRepository.findByAgentId(agentId.get()).ifPresent(agent -> {
                 throw new IllegalArgumentException("User already exists");
@@ -58,10 +55,6 @@ public class UserCommandServiceImpl implements UserCommandService {
         var user = new User(command.email(), hashingService.encode(command.password()), agentId.get().agentId());
         userRepository.save(user);
         return userRepository.findByEmail(command.email());
-        // Create profile of that user
-        externalAgentServiceForIam.createAgent(command.username(), command.username(), command.username(), "secret", "");
-        // return the iam user
-        return userRepository.findByUsername(command.username());
     }
 
     @Override
@@ -73,4 +66,5 @@ public class UserCommandServiceImpl implements UserCommandService {
         var token = tokenService.generateToken(user.getUserEmail());
         return Optional.of(new ImmutablePair<>(user, token));
     }
+
 }
