@@ -5,6 +5,9 @@ import com.deltatech.diligencetech.platform.duediligenceprojectmanagement.interf
 
 public class CreateProjectCommandFromResourceAssembler {
     public static CreateProjectCommand toCommandFromResource(CreateProjectResource resource) {
-        return new CreateProjectCommand(resource.projectFullName(), resource.managerFirstName(), resource.managerLastName(), resource.startDate(), resource.endDate(), resource.budget(), resource.progress(), resource.status());
+        //old
+        //return new CreateProjectCommand(resource.projectFullName(), resource.managerFirstName(), resource.managerLastName(), resource.startDate(), resource.endDate(), resource.budget(), resource.progress(), resource.status());
+        //new
+        return new CreateProjectCommand(resource.projectName());
     }
 }

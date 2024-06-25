@@ -32,9 +32,9 @@ public class ProjectMemberController {
     }
 
     @PostMapping("/{agentRecordId}")
-    public ResponseEntity<ProjectMemberItemResource> addMemberToDueDiligenceProjectProjectMember(@PathVariable Long projectId, @RequestBody CreateProjectMemberItemResource command) {
-        projectCommandService.handle(new AddMemberToProjectMemberCommand(new AgentRecordId(command.agentId()), projectId, new AgentEmail(command.agentEmail()), new AgentRole(command.agentRole())));
-        var getProjectMemberItemByDueDiligenceProjectIdAndAgentIdQuery = new GetProjectMemberItemByProjectIdAndAgentId(projectId, new AgentRecordId(command.agentId()));
+    public ResponseEntity<ProjectMemberItemResource> addMemberToDueDiligenceProjectProjectMember(@PathVariable Long projectId, String agentCode,@RequestBody CreateProjectMemberItemResource command) {
+        projectCommandService.handle(new AddMemberToProjectMemberCommand(new AgentRecordId(agentCode), projectId, new AgentRole(command.agentRole())));
+        var getProjectMemberItemByDueDiligenceProjectIdAndAgentIdQuery = new GetProjectMemberItemByProjectIdAndAgentId(projectId, new AgentRecordId(agentCode));
         var projectMemberItem = projectQueryService.handle(getProjectMemberItemByDueDiligenceProjectIdAndAgentIdQuery);
         if (projectMemberItem.isEmpty()) {
             return ResponseEntity.notFound().build();

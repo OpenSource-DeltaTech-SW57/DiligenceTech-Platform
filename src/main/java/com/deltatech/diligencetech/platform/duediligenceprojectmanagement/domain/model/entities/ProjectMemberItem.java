@@ -26,20 +26,20 @@ public class ProjectMemberItem extends AuditableModel {
     @NotNull
     private AgentRecordId agentRecordId;
 
-    @Getter
-    @Embedded
-    @NotNull
-    private AgentEmail agentEmail;
+    //@Getter
+    //@Embedded
+    //@NotNull
+    //private AgentEmail agentEmail;
 
     @Getter
     @Embedded
     @NotNull
     private AgentRole agentRole;
 
-    public ProjectMemberItem(Project project, AgentRecordId agentRecordId, AgentEmail agentEmail, AgentRole agentRole) {
+    public ProjectMemberItem(Project project, AgentRecordId agentRecordId, AgentRole agentRole) {
         this.project = project;
         this.agentRecordId = agentRecordId;
-        this.agentEmail = agentEmail;
+        //this.agentEmail = agentEmail;
         this.agentRole = agentRole;
     }
 
