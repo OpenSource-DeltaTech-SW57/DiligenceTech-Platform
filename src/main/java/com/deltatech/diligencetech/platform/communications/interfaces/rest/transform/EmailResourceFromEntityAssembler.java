@@ -5,6 +5,6 @@ import com.deltatech.diligencetech.platform.communications.interfaces.rest.resou
 
 public class EmailResourceFromEntityAssembler {
     public static EmailResource toResourceFromEntity(Email entity) {
-        return new EmailResource(entity.getId(), entity.getReceiverId(), entity.getSenderId(), entity.getMessage());
+        return new EmailResource(entity.getId(), entity.getSenderEmail(), entity.getReceiverEmail(), entity.getTitle(), entity.getDescription(), entity.getMessage());
     }
 }

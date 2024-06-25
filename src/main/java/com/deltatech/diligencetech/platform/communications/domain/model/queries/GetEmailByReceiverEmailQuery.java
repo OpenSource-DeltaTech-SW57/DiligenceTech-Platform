@@ -1,4 +1,4 @@
 package com.deltatech.diligencetech.platform.communications.domain.model.queries;
 
-public record GetEmailBySenderIdQuery(Long senderId) {
+public record GetEmailByReceiverEmailQuery(String receiverEmail) {
 }

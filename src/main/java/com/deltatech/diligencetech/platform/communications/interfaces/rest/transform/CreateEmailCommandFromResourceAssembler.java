@@ -5,6 +5,6 @@ import com.deltatech.diligencetech.platform.communications.interfaces.rest.resou
 
 public class CreateEmailCommandFromResourceAssembler {
     public static CreateEmailCommand toCommandFromResource(CreateEmailResource resource){
-        return new CreateEmailCommand( resource.senderId(), resource.receiverId(), resource.message());
+        return new CreateEmailCommand( resource.senderEmail(), resource.receiverEmail(), resource.title(), resource.description(), resource.message());
     }
 }

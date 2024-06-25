@@ -1,4 +1,4 @@
 package com.deltatech.diligencetech.platform.communications.interfaces.rest.resources;
 
-public record CreateEmailResource(Long senderId, Long receiverId, String message) {
+public record CreateEmailResource(String senderEmail, String receiverEmail, String title, String description, String message) {
 }
