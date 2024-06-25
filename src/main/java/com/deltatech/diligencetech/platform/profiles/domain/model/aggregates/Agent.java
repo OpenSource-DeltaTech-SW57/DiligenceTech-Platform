@@ -33,7 +33,7 @@ public class Agent extends AuditableAbstractAggregateRoot<Agent> {
 
   @Column
   @Getter
-  private String password;
+  private String biography;
 
   @Column(unique = true)
   @Getter
@@ -46,7 +46,7 @@ public class Agent extends AuditableAbstractAggregateRoot<Agent> {
     this.name = new AgentName(command.firstname(), command.lastName());
     this.imageUrl = command.imageUrl();
     this.email = command.email();
-    this.password = command.password();
+    this.biography = command.biography();
     this.username = command.username();
     this.location = command.location();
     }

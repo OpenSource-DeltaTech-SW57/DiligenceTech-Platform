@@ -20,8 +20,8 @@ public class ExternalAgentIamService {
         return Optional.of(new AgentId(agentId));
     }
 
-    public Optional<AgentId> createAgent(String username, String email, String password, String firstname, String lastName) {
-        var agentId = agentContextFacade.createAgent(username, email, password, firstname, lastName);
+    public Optional<AgentId> createAgent(String username, String email, String firstname, String lastName) {
+        var agentId = agentContextFacade.createAgent(username, email, firstname, lastName);
         if(agentId == 0L) return Optional.empty();
         return Optional.of(new AgentId(agentId));
     }

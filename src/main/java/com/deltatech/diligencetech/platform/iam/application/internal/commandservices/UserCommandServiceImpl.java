@@ -36,7 +36,7 @@ public class UserCommandServiceImpl implements UserCommandService {
     public Optional<User> handle(SignUpCommand command) {
         var agentId = externalAgentIamService.fetchAgentIdByEmail(command.email());
         if(agentId.isEmpty()) {
-            agentId = externalAgentIamService.createAgent(command.username(), command.email(), hashingService.encode(command.password()), command.firstname(), command.lastName());
+            agentId = externalAgentIamService.createAgent(command.username(), command.email(),  command.firstname(), command.lastName());
         } else {
             userRepository.findByAgentId(agentId.get()).ifPresent(agent -> {
                 throw new IllegalArgumentException("User already exists");
