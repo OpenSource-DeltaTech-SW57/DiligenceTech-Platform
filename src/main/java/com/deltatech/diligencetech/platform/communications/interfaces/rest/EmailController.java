@@ -4,6 +4,8 @@ package com.deltatech.diligencetech.platform.communications.interfaces.rest;
 import com.deltatech.diligencetech.platform.communications.domain.model.aggregates.Email;
 import com.deltatech.diligencetech.platform.communications.domain.model.queries.GetAllEmailsQuery;
 import com.deltatech.diligencetech.platform.communications.domain.model.queries.GetEmailByIdQuery;
+import com.deltatech.diligencetech.platform.communications.domain.model.queries.GetEmailByReceiverIdQuery;
+import com.deltatech.diligencetech.platform.communications.domain.model.queries.GetEmailBySenderIdQuery;
 import com.deltatech.diligencetech.platform.communications.domain.services.EmailCommandService;
 import com.deltatech.diligencetech.platform.communications.domain.services.EmailQueryService;
 import com.deltatech.diligencetech.platform.communications.interfaces.rest.resources.CreateEmailResource;
@@ -59,6 +61,23 @@ public class EmailController {
         var emailResource = EmailResourceFromEntityAssembler.toResourceFromEntity(email.get());
         return new ResponseEntity<>(emailResource, HttpStatus.CREATED);
     }
-
+    @GetMapping("/sender/{senderId}")
+    public ResponseEntity<List<EmailResource>> getEmailsBySenderId(@PathVariable Long senderId) {
+        var getEmailsBySenderIdQuery = new GetEmailBySenderIdQuery(senderId);
+        var emails = emailQueryService.handle(getEmailsBySenderIdQuery);
+        var emailsResources = emails.stream()
+                .map(EmailResourceFromEntityAssembler::toResourceFromEntity)
+                .toList();
+        return ResponseEntity.ok(emailsResources);
+    }
+    @GetMapping("/receiver/{receiverId}")
+    public ResponseEntity<List<EmailResource>> getEmailsByReceiverId(@PathVariable Long receiverId) {
+        var getEmailsByReceiverIdQuery = new GetEmailByReceiverIdQuery(receiverId);
+        var emails = emailQueryService.handle(getEmailsByReceiverIdQuery);
+        var emailsResources = emails.stream()
+                .map(EmailResourceFromEntityAssembler::toResourceFromEntity)
+                .toList();
+        return ResponseEntity.ok(emailsResources);
+    }
 
 }

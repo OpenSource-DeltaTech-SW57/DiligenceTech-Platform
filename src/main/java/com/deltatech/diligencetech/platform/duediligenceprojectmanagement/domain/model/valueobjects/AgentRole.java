@@ -1,7 +1,7 @@
 package com.deltatech.diligencetech.platform.duediligenceprojectmanagement.domain.model.valueobjects;
 
 public record AgentRole(String agentRole) {
-  public AgentRole() {this(null);}
+    public AgentRole() {this(null);}
 
     public AgentRole {
         if(agentRole == null || agentRole.isBlank()) {

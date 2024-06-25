@@ -1,15 +1,19 @@
 package com.deltatech.diligencetech.platform.profiles.interfaces.rest;
 
 import com.deltatech.diligencetech.platform.profiles.domain.model.commands.DeleteAgentCommand;
+import com.deltatech.diligencetech.platform.profiles.domain.model.commands.UpdateAgentBiographyAndProfilePicCommand;
+import com.deltatech.diligencetech.platform.profiles.domain.model.queries.GetAgentByCodeQuery;
 import com.deltatech.diligencetech.platform.profiles.domain.model.queries.GetAgentByIdQuery;
 import com.deltatech.diligencetech.platform.profiles.domain.model.queries.GetAllAgentsQuery;
 import com.deltatech.diligencetech.platform.profiles.domain.services.AgentCommandService;
 import com.deltatech.diligencetech.platform.profiles.domain.services.AgentQueryService;
 import com.deltatech.diligencetech.platform.profiles.interfaces.rest.resources.AgentResource;
 import com.deltatech.diligencetech.platform.profiles.interfaces.rest.resources.CreateAgentResource;
+import com.deltatech.diligencetech.platform.profiles.interfaces.rest.resources.UpdateAgentBiographyAndProfilePicResource;
 import com.deltatech.diligencetech.platform.profiles.interfaces.rest.resources.UpdateAgentUsernameResource;
 import com.deltatech.diligencetech.platform.profiles.interfaces.rest.transform.AgentResourceFromEntityAssembler;
 import com.deltatech.diligencetech.platform.profiles.interfaces.rest.transform.CreateAgentCommandFromResourceAssembler;
+import com.deltatech.diligencetech.platform.profiles.interfaces.rest.transform.UpdateAgentBiographyAndPicCommandFromResourceAssembler;
 import com.deltatech.diligencetech.platform.profiles.interfaces.rest.transform.UpdateAgentUsernameCommandFromResourceAssembler;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
@@ -134,4 +138,25 @@ public class AgentController
     agentCommandService.handle(deleteAgentCommand);
     return ResponseEntity.ok("Course with given id successfully deleted");
   }
+
+  @GetMapping("/code/{agentCode}")
+  public ResponseEntity<AgentResource> getAgentByCode(@PathVariable String agentCode) {
+    var getAgentByIdCode = new GetAgentByCodeQuery(agentCode);
+    var agent = agentQueryService.handle(getAgentByIdCode);
+    if (agent.isEmpty()) return ResponseEntity.badRequest().build();
+    var agentResource = AgentResourceFromEntityAssembler.toResourceFromEntity(agent.get());
+    return ResponseEntity.ok(agentResource);
+  }
+
+  @PutMapping("/{agentId}/biography")
+  public ResponseEntity<AgentResource> updateAgentBiography(@PathVariable Long agentId, @RequestBody UpdateAgentBiographyAndProfilePicResource updateAgentBiographyAndProfilePicResource) {
+    var updateAgentCommand = UpdateAgentBiographyAndPicCommandFromResourceAssembler.toCommandFromResource(agentId, updateAgentBiographyAndProfilePicResource);
+    var updatedAgent = agentCommandService.handle(updateAgentCommand);
+    if (updatedAgent.isEmpty()) {
+      return ResponseEntity.badRequest().build();
+    }
+    var agentResource = AgentResourceFromEntityAssembler.toResourceFromEntity(updatedAgent.get());
+    return ResponseEntity.ok(agentResource);
+  }
+
 }

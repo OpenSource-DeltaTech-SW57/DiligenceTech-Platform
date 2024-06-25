@@ -1,8 +1,8 @@
 package com.deltatech.diligencetech.platform.communications.interfaces.rest;
 
-import com.deltatech.diligencetech.platform.communications.domain.model.aggregates.Notification;
 import com.deltatech.diligencetech.platform.communications.domain.model.queries.GetAllNotificationsQuery;
 import com.deltatech.diligencetech.platform.communications.domain.model.queries.GetNotificationByIdQuery;
+import com.deltatech.diligencetech.platform.communications.domain.model.queries.GetNotificationsByAgentIdQuery;
 import com.deltatech.diligencetech.platform.communications.domain.services.NotificationCommandService;
 import com.deltatech.diligencetech.platform.communications.domain.services.NotificationQueryService;
 import com.deltatech.diligencetech.platform.communications.interfaces.rest.resources.CreateNotificationResource;
@@ -58,5 +58,16 @@ public class NotificationController {
         var notificationResource = NotificationResourceFromEntityAssembler.toResourceFromEntity(notification.get());
         return new ResponseEntity<>(notificationResource, HttpStatus.CREATED);
     }
+    @GetMapping("/agent_id")
+    public ResponseEntity<List<NotificationResource>> getNotificationByAgentId(@RequestParam Long agentId) {
+        var getNotificationsByAgentIdQuery = new GetNotificationsByAgentIdQuery(agentId);
+        var notifications = notificationQueryService.handle(getNotificationsByAgentIdQuery);
+        var notificationsResources = notifications.stream()
+                .map(NotificationResourceFromEntityAssembler::toResourceFromEntity)
+                .toList();
+        return ResponseEntity.ok(notificationsResources);
+    }
+
+
 
 }

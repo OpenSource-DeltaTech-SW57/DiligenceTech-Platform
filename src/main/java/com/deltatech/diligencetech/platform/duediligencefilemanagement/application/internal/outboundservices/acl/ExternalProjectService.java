@@ -26,19 +26,12 @@ public class ExternalProjectService {
     return Optional.of(testId);
   }
 
-    /**
-     * Create a project
-     *
-     * @param projectFullName the project full name
-     * @param managerFirstName the manager first name
-     * @param managerLastName the manager last name
-     * @param startDate the start date
-     * @param endDate the end date
-     * @param budget the budget
-     * @param progress the progress
-     * @param status the status
-     * @return projectId if created, empty otherwise
-     */
+  /**
+   * Create a project
+   *
+   * @param projectFullName the project full name
+   * @return projectId if created, empty otherwise
+   */
 
   //old
   //public Optional<Long> createProject(String projectFullName, String managerFirstName, String managerLastName, String startDate, String endDate, Float budget, Long progress, String status) {
