@@ -1,8 +1,12 @@
 package com.deltatech.diligencetech.platform.profiles.interfaces.rest;
 
 import com.deltatech.diligencetech.platform.profiles.domain.model.commands.DeleteAgentCommand;
+<<<<<<< HEAD
 import com.deltatech.diligencetech.platform.profiles.domain.model.commands.UpdateAgentBiographyAndProfilePicCommand;
 import com.deltatech.diligencetech.platform.profiles.domain.model.queries.GetAgentByCodeQuery;
+=======
+import com.deltatech.diligencetech.platform.profiles.domain.model.queries.GetAgentByEmailQuery;
+>>>>>>> backup-personal
 import com.deltatech.diligencetech.platform.profiles.domain.model.queries.GetAgentByIdQuery;
 import com.deltatech.diligencetech.platform.profiles.domain.model.queries.GetAllAgentsQuery;
 import com.deltatech.diligencetech.platform.profiles.domain.services.AgentCommandService;
@@ -69,6 +73,16 @@ public class AgentController
   @GetMapping("/{agentId}")
   public ResponseEntity<AgentResource> getAgentById(@PathVariable Long agentId) {
     var getAgentByIdQuery = new GetAgentByIdQuery(agentId);
+    var agent = agentQueryService.handle(getAgentByIdQuery);
+    if (agent.isEmpty()) return ResponseEntity.badRequest().build();
+    var agentResource = AgentResourceFromEntityAssembler.toResourceFromEntity(agent.get());
+    return ResponseEntity.ok(agentResource);
+  }
+
+
+  @GetMapping("/{agentEmail}")
+  public ResponseEntity<AgentResource> getAgentByEmail(@PathVariable String agentEmail) {
+    var getAgentByIdQuery = new GetAgentByEmailQuery(agentEmail);
     var agent = agentQueryService.handle(getAgentByIdQuery);
     if (agent.isEmpty()) return ResponseEntity.badRequest().build();
     var agentResource = AgentResourceFromEntityAssembler.toResourceFromEntity(agent.get());

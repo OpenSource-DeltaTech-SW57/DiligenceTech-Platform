@@ -19,12 +19,17 @@ public class AgentContextFacade {
   }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   public Long createAgent(String username, String email, String password, String firstname, String lastName) {
     var createAgentCommand = new CreateAgentCommand(username, email, password, "src/images/file", firstname, lastName, "-");
 =======
   public Long createAgent(String code, String email, String username, String biography, String imageUrl) {
     var createAgentCommand = new CreateAgentCommand(code, email, username, biography, imageUrl);
 >>>>>>> 50c506ee37cf2ee0e4d7f65bf3b4f566d28ed2ef
+=======
+  public Long createAgent(String username, String email, String firstname, String lastName) {
+    var createAgentCommand = new CreateAgentCommand(username, email, "Welcome to my profile...", "src/images/file", firstname, lastName, "-");
+>>>>>>> backup-personal
     var agentId = agentCommandService.handle(createAgentCommand);
     var getAgentByIdQuery = new GetAgentByIdQuery(agentId);
     var agent = agentQueryService.handle(getAgentByIdQuery);

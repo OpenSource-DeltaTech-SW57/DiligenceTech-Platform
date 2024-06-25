@@ -37,7 +37,7 @@ public class Agent extends AuditableAbstractAggregateRoot<Agent> {
 
   @Column
   @Getter
-  private String password;
+  private String biography;
 
   @Column(unique = true)
   @Getter

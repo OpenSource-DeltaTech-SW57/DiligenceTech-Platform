@@ -37,8 +37,8 @@ public class ExternalAgentServiceForCommunications {
    * @param imageUrl the image url
    * @return profileId if created, empty otherwise
    */
-  public Optional<Long> createAgent(String username, String email, String password, String firstname, String lastName) {
-    var agentId = agentContextFacade.createAgent(username, email, password, firstname, lastName);
+  public Optional<Long> createAgent(String username, String email, String firstname, String lastName) {
+    var agentId = agentContextFacade.createAgent(username, email, firstname, lastName);
     if (agentId == 0L) return Optional.empty();
     return Optional.of(agentId);
   }

@@ -3,13 +3,13 @@ package com.deltatech.diligencetech.platform.duediligenceprojectmanagement.domai
 import jakarta.persistence.Embeddable;
 
 @Embeddable
-public record ProjectName(String projectFullName) {
+public record ProjectName(String projectName) {
     public ProjectName(){this(null);}
 
-    public String getProjectFullName() {return projectFullName;}
+    public String getProjectFullName() {return projectName;}
 
     public ProjectName {
-        if (projectFullName == null || projectFullName.isBlank()) {
+        if (projectName == null || projectName.isBlank()) {
             throw  new IllegalArgumentException("Project name cannot be null or blank");
         }
     }

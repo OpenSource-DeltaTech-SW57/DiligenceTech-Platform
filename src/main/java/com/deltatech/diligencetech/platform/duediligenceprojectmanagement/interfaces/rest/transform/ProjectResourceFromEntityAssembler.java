@@ -8,6 +8,6 @@ public class ProjectResourceFromEntityAssembler {
         //old
         //return new ProjectResource(entity.getId(), entity.getName().projectFullName(), getProjectManagerFullName(), entity.getStatus().getProjectStatusName());
         //new
-        return new ProjectResource(entity.getId(), entity.getName().projectFullName());
+        return new ProjectResource(entity.getId(), entity.getName().projectName());
     }
 }

@@ -50,15 +50,12 @@ public class ExternalAgentService {
     /**
      * Create an agent
      *
-     * @param code the code
      * @param email the email
      * @param username the username
-     * @param password the password
-     * @param imageUrl the image url
      * @return profileId if created, empty otherwise
      */
-  public Optional<Long> createAgent(String code, String email, String username, String password, String imageUrl) {
-    var agentId = agentContextFacade.createAgent( code, email, username, password, imageUrl);
+  public Optional<Long> createAgent(String username, String email, String firstname, String lastname) {
+    var agentId = agentContextFacade.createAgent(username, email, firstname, lastname);
     if (agentId == 0L) return Optional.empty();
     return Optional.of(agentId);
   }
