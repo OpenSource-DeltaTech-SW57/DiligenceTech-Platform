@@ -25,4 +25,8 @@ public class ExternalAgentIamService {
         if(agentId == 0L) return Optional.empty();
         return Optional.of(new AgentId(agentId));
     }
+
+    public String fetchAgentUsernameByEmail(String email) {
+        return agentContextFacade.fetchAgentUsernameByEmail(email);
+    }
 }

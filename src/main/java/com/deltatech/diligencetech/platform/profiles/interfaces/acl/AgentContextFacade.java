@@ -65,6 +65,13 @@ public class AgentContextFacade {
     return agent.get().getId();
   }
 
+  public String fetchAgentUsernameByEmail(String email) {
+    var getAgentByEmailQuery = new GetAgentByEmailQuery(email);
+    var agent = agentQueryService.handle(getAgentByEmailQuery);
+    if (agent.isEmpty()) return "";
+    return agent.get().getUsername();
+  }
+
   public String fetchUsernameByAgentId(Long id) {
     var getUsernameByAgentId = new GetAgentByIdQuery(id);
     var username = agentQueryService.handle(getUsernameByAgentId);

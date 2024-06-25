@@ -1,6 +1,10 @@
 package com.deltatech.diligencetech.platform.iam.interfaces.rest;
 
+import com.deltatech.diligencetech.platform.iam.application.internal.outboundservices.acl.ExternalAgentIamService;
+import com.deltatech.diligencetech.platform.iam.domain.model.queries.GetUserByEmailQuery;
+import com.deltatech.diligencetech.platform.iam.domain.model.queries.GetUserByIdQuery;
 import com.deltatech.diligencetech.platform.iam.domain.services.UserCommandService;
+import com.deltatech.diligencetech.platform.iam.domain.services.UserQueryService;
 import com.deltatech.diligencetech.platform.iam.interfaces.rest.resources.AuthenticatedUserResource;
 import com.deltatech.diligencetech.platform.iam.interfaces.rest.resources.SignInResource;
 import com.deltatech.diligencetech.platform.iam.interfaces.rest.resources.SignUpResource;
@@ -24,9 +28,11 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = "Authentication", description = "Authentication Endpoints")
 public class AuthenticationController {
     private final UserCommandService userCommandService;
+    private final ExternalAgentIamService externalAgentIamService;
 
-    public AuthenticationController(UserCommandService userCommandService) {
+    public AuthenticationController(UserCommandService userCommandService, ExternalAgentIamService externalAgentIamService) {
         this.userCommandService = userCommandService;
+        this.externalAgentIamService = externalAgentIamService;
     }
 
     @PostMapping("/sign-in")
@@ -36,7 +42,8 @@ public class AuthenticationController {
         if (authenticatedUser.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
-        var authenticatedUserResource = AuthenticatedUserResourceFromEntityAssembler.toResourceFromEntity(authenticatedUser.get().getLeft(), authenticatedUser.get().getRight());
+        var authenticatedProfileUsername = externalAgentIamService.fetchAgentUsernameByEmail(authenticatedUser.get().getLeft().getEmail());
+        var authenticatedUserResource = AuthenticatedUserResourceFromEntityAssembler.toResourceFromEntity(authenticatedUser.get().getLeft(), authenticatedUser.get().getRight(), authenticatedProfileUsername);
         return ResponseEntity.ok(authenticatedUserResource);
     }
 
