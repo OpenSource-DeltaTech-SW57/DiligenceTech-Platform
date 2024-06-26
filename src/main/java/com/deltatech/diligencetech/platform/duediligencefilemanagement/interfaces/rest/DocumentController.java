@@ -1,13 +1,14 @@
 package com.deltatech.diligencetech.platform.duediligencefilemanagement.interfaces.rest;
 
+import com.deltatech.diligencetech.platform.duediligencefilemanagement.domain.model.commands.DeleteDocumentCommand;
 import com.deltatech.diligencetech.platform.duediligencefilemanagement.domain.model.queries.GetAllDocumentsQuery;
 import com.deltatech.diligencetech.platform.duediligencefilemanagement.domain.model.queries.GetDocumentByIdQuery;
-import com.deltatech.diligencetech.platform.duediligencefilemanagement.domain.services.DocumentCommandService;
-import com.deltatech.diligencetech.platform.duediligencefilemanagement.domain.services.DocumentQueryService;
+import com.deltatech.diligencetech.platform.duediligencefilemanagement.domain.model.queries.GetDocumentsByFolderIdQuery;
 import com.deltatech.diligencetech.platform.duediligencefilemanagement.domain.services.DocumentCommandService;
 import com.deltatech.diligencetech.platform.duediligencefilemanagement.domain.services.DocumentQueryService;
 import com.deltatech.diligencetech.platform.duediligencefilemanagement.interfaces.rest.resources.DocumentResource;
 import com.deltatech.diligencetech.platform.duediligencefilemanagement.interfaces.rest.resources.CreateDocumentResource;
+import com.deltatech.diligencetech.platform.duediligencefilemanagement.interfaces.rest.resources.InfoMessageResource;
 import com.deltatech.diligencetech.platform.duediligencefilemanagement.interfaces.rest.resources.UpdateDocumentNameResource;
 import com.deltatech.diligencetech.platform.duediligencefilemanagement.interfaces.rest.transform.DocumentResourceFromEntityAssembler;
 import com.deltatech.diligencetech.platform.duediligencefilemanagement.interfaces.rest.transform.CreateDocumentCommandFromResourceAssembler;
@@ -63,12 +64,12 @@ public class DocumentController
    * @return the course resource with the given id
    * @see DocumentResource
    */
-  @GetMapping("/{DocumentId}")
-  public ResponseEntity<DocumentResource> getDocumentById(@PathVariable Long documentId) {
-    var getDocumentByIdQuery = new GetDocumentByIdQuery(documentId);
-    var Document = documentQueryService.handle(getDocumentByIdQuery);
-    if (Document.isEmpty()) return ResponseEntity.badRequest().build();
-    var DocumentResource = DocumentResourceFromEntityAssembler.toResourceFromEntity(Document.get());
+  @GetMapping("/{folderId}")
+  public ResponseEntity<List<DocumentResource>> getDocumentByFolderId(@PathVariable Long folderId) {
+    var getDocumentsByFolderIdQuery = new GetDocumentsByFolderIdQuery(folderId);
+    var Documents = documentQueryService.handle(getDocumentsByFolderIdQuery);
+    if (Documents.isEmpty()) return ResponseEntity.badRequest().build();
+    var DocumentResource = Documents.stream().map(DocumentResourceFromEntityAssembler::toResourceFromEntity).toList();
     return ResponseEntity.ok(DocumentResource);
   }
 
@@ -106,4 +107,14 @@ public class DocumentController
     var DocumentResource = DocumentResourceFromEntityAssembler.toResourceFromEntity(updatedDocument.get());
     return ResponseEntity.ok(DocumentResource);
   }
+  /**
+   * Deletes a document.
+   */
+    @DeleteMapping("/{DocumentId}")
+    public ResponseEntity<InfoMessageResource> deleteDocument(@PathVariable Long DocumentId) {
+        var deleteDocumentCommand = new DeleteDocumentCommand(DocumentId);
+        documentCommandService.handle(deleteDocumentCommand);
+        var infoMessageResource = new InfoMessageResource("Document with given id successfully deleted");
+        return ResponseEntity.ok(infoMessageResource);
+    }
 }

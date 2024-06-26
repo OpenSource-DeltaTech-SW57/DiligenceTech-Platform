@@ -17,11 +17,12 @@ public class Document extends AuditableModel {
     @Getter
     private Long id;
 
-    @Column
+    @Column(length = 1000)
     @Getter
     private String filename;
 
-    @Column
+    // max length of very big
+    @Column(length = 1000)
     @Getter
     private String fileUrl;
 

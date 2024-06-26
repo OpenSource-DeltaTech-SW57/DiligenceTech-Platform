@@ -76,7 +76,7 @@ public class AgentController
   }
 
 
-  @GetMapping("/{agentEmail}")
+  @GetMapping("/email/{agentEmail}")
   public ResponseEntity<AgentResource> getAgentByEmail(@PathVariable String agentEmail) {
     var getAgentByIdQuery = new GetAgentByEmailQuery(agentEmail);
     var agent = agentQueryService.handle(getAgentByIdQuery);

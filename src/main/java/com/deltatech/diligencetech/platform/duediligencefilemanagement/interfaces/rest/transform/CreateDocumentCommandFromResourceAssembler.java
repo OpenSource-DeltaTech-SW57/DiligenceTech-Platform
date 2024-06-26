@@ -7,6 +7,6 @@ import com.deltatech.diligencetech.platform.duediligencefilemanagement.interface
 
 public class CreateDocumentCommandFromResourceAssembler {
   public static CreateDocumentCommand toCommandFromResource(CreateDocumentResource resource) {
-    return new CreateDocumentCommand(resource.projectId(), resource.filename(), resource.fileUrl());
+    return new CreateDocumentCommand(resource.folderId(), resource.filename(), resource.fileUrl());
   }
 }
