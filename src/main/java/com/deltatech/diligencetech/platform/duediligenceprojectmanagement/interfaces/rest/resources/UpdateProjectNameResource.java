@@ -4,5 +4,5 @@ package com.deltatech.diligencetech.platform.duediligenceprojectmanagement.inter
 //public record UpdateProjectResource(String projectFullName, String managerFirstName, String managerLastName, String startDate, String endDate, Float budget, Long progress, String status) {
 //}
 //new
-public record UpdateProjectResource(String projectFullName) {
+public record UpdateProjectNameResource(String projectName) {
 }
