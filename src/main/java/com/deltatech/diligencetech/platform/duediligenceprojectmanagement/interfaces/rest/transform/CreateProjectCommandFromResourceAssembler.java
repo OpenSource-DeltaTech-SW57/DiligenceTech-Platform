@@ -8,6 +8,6 @@ public class CreateProjectCommandFromResourceAssembler {
         //old
         //return new CreateProjectCommand(resource.projectFullName(), resource.managerFirstName(), resource.managerLastName(), resource.startDate(), resource.endDate(), resource.budget(), resource.progress(), resource.status());
         //new
-        return new CreateProjectCommand(resource.projectName());
+        return new CreateProjectCommand(resource.projectName(), resource.buyAgents(), resource.sellAgents());
     }
 }

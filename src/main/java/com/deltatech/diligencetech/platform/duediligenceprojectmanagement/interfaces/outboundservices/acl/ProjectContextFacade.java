@@ -6,6 +6,8 @@ import com.deltatech.diligencetech.platform.duediligenceprojectmanagement.domain
 import com.deltatech.diligencetech.platform.duediligenceprojectmanagement.domain.services.ProjectQueryService;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+
 @Service
 
 public class ProjectContextFacade {
@@ -28,7 +30,7 @@ public class ProjectContextFacade {
   //}
   //new
   public Long createProject(String projectFullName) {
-    var createProjectCommand = new CreateProjectCommand(projectFullName);
+    var createProjectCommand = new CreateProjectCommand(projectFullName, new ArrayList<>(), new ArrayList<>());
     var projectId = projectCommandService.handle(createProjectCommand);
     var getProjectByIdQuery = new GetProjectByIdQuery(projectId);
     var project = projectQueryService.handle(getProjectByIdQuery);

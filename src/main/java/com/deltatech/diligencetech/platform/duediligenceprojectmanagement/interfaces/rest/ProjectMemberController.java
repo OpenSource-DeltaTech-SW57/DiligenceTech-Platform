@@ -20,7 +20,7 @@ import java.util.List;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
-@RequestMapping(value = "/due-diligence-projects/{projectId}/project-member-items", produces = APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/api/v1/due-diligence-projects/{projectId}/project-member-items", produces = APPLICATION_JSON_VALUE)
 @Tag(name = "Due Diligence Projects")
 public class ProjectMemberController {
     private final ProjectCommandService projectCommandService;
@@ -31,8 +31,8 @@ public class ProjectMemberController {
         this.projectQueryService = projectQueryService;
     }
 
-    @PostMapping("/{agentRecordId}")
-    public ResponseEntity<ProjectMemberItemResource> addMemberToDueDiligenceProjectProjectMember(@PathVariable Long projectId, String agentCode,@RequestBody CreateProjectMemberItemResource command) {
+    @PostMapping("/{agentCode}")
+    public ResponseEntity<ProjectMemberItemResource> addMemberToDueDiligenceProjectProjectMember(@PathVariable Long projectId, @PathVariable String agentCode, @RequestBody CreateProjectMemberItemResource command) {
         projectCommandService.handle(new AddMemberToProjectMemberCommand(new AgentRecordId(agentCode), projectId, new AgentRole(command.agentRole())));
         var getProjectMemberItemByDueDiligenceProjectIdAndAgentIdQuery = new GetProjectMemberItemByProjectIdAndAgentId(projectId, new AgentRecordId(agentCode));
         var projectMemberItem = projectQueryService.handle(getProjectMemberItemByDueDiligenceProjectIdAndAgentIdQuery);

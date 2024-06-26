@@ -6,6 +6,8 @@ import com.deltatech.diligencetech.platform.duediligenceprojectmanagement.domain
 import com.deltatech.diligencetech.platform.duediligenceprojectmanagement.domain.model.commands.CreateProjectCommand;
 import com.deltatech.diligencetech.platform.duediligenceprojectmanagement.domain.model.commands.DeleteProjectCommand;
 import com.deltatech.diligencetech.platform.duediligenceprojectmanagement.domain.model.commands.UpdateProjectCommand;
+import com.deltatech.diligencetech.platform.duediligenceprojectmanagement.domain.model.valueobjects.AgentRecordId;
+import com.deltatech.diligencetech.platform.duediligenceprojectmanagement.domain.model.valueobjects.AgentRole;
 import com.deltatech.diligencetech.platform.duediligenceprojectmanagement.domain.services.ProjectCommandService;
 import com.deltatech.diligencetech.platform.duediligenceprojectmanagement.infrastructure.persistence.jpa.repositories.ProjectRepository;
 import org.springframework.stereotype.Service;
@@ -25,8 +27,22 @@ public class ProjectCommandServiceImpl implements ProjectCommandService {
 
     @Override
     public Long handle(CreateProjectCommand command) {
-
         var dueDiligenceProject = new Project(command);
+        // add a member for each agent on command
+        command.buyAgents().forEach(buyAgent -> {
+            if(buyAgent != null) {
+                var agentIdByCode = externalAgentService.fetchAgentIdByCode(buyAgent);
+                if(agentIdByCode.isEmpty()) throw new IllegalArgumentException("Agent does not exist");
+            }
+            dueDiligenceProject.addMemberToProjectMember(new AgentRecordId(buyAgent),  new AgentRole("BUY AGENT"));
+        });
+        command.sellAgents().forEach(sellAgent -> {
+            if(sellAgent != null) {
+                var agentIdByCode = externalAgentService.fetchAgentIdByCode(sellAgent);
+                if(agentIdByCode.isEmpty()) throw new IllegalArgumentException("Agent does not exist");
+            }
+            dueDiligenceProject.addMemberToProjectMember(new AgentRecordId(sellAgent),  new AgentRole("SELL AGENT"));
+        });
         try {
             projectRepository.save(dueDiligenceProject);
         } catch (Exception e) {
@@ -71,9 +87,6 @@ public class ProjectCommandServiceImpl implements ProjectCommandService {
 
     @Override
     public void handle(AddMemberToProjectMemberCommand command) {
-        if(!projectRepository.existsById(command.projectId())) {
-            throw new IllegalArgumentException("Due diligence project does not exist");
-        }
         if(command.agentId().agentRecordId() != null) {
             var agentIdByCode = externalAgentService.fetchAgentIdByCode(command.agentId().agentRecordId());
             if(agentIdByCode.isEmpty()) throw new IllegalArgumentException("Agent does not exist");
