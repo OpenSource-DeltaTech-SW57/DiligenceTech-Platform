@@ -56,8 +56,37 @@ public class Project extends AuditableAbstractAggregateRoot<Project> {
         this.projectMember = new ProjectMember();
     }
 
-    public Project updateProjectInformation(String projectFullName) {
-        this.name = new ProjectName(projectFullName);
+    public Project updateProjectName (String projectName) {
+        this.name = new ProjectName(projectName);
+        return this;
+    }
+
+    public Project updateProjectBuyStatus(String buyStatus) {
+        this.buyStatus = new ProjectBuyStatus(buyStatus);
+       return this;
+    }
+
+    public Project updateProjectCompleted(Boolean completed) {
+        this.completed = completed;
+        return this;
+    }
+
+    public Project updateProjectConfirm(Boolean confirm) {
+        this.confirm = confirm;
+        return this;
+    }
+
+    public Project updateProjectSellStatus(String sellStatus) {
+        this.sellStatus = new ProjectSellStatus(sellStatus);
+        return this;
+    }
+
+    public Project updateProjec(String name, String buyStatus, String sellStatus, Boolean completed, Boolean confirm) {
+        this.name = new ProjectName(name);
+        this.buyStatus = new ProjectBuyStatus(buyStatus);
+        this.sellStatus = new ProjectSellStatus(sellStatus);
+        this.completed = completed;
+        this.confirm = confirm;
         return this;
     }
 
