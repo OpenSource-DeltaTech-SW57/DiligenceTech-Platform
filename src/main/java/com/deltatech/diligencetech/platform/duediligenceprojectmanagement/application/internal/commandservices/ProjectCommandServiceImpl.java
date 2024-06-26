@@ -2,10 +2,7 @@ package com.deltatech.diligencetech.platform.duediligenceprojectmanagement.appli
 
 import com.deltatech.diligencetech.platform.duediligenceprojectmanagement.application.internal.outboundservices.acl.ExternalAgentService;
 import com.deltatech.diligencetech.platform.duediligenceprojectmanagement.domain.model.aggregates.Project;
-import com.deltatech.diligencetech.platform.duediligenceprojectmanagement.domain.model.commands.AddMemberToProjectMemberCommand;
-import com.deltatech.diligencetech.platform.duediligenceprojectmanagement.domain.model.commands.CreateProjectCommand;
-import com.deltatech.diligencetech.platform.duediligenceprojectmanagement.domain.model.commands.DeleteProjectCommand;
-import com.deltatech.diligencetech.platform.duediligenceprojectmanagement.domain.model.commands.UpdateProjectCommand;
+import com.deltatech.diligencetech.platform.duediligenceprojectmanagement.domain.model.commands.*;
 import com.deltatech.diligencetech.platform.duediligenceprojectmanagement.domain.model.valueobjects.AgentRecordId;
 import com.deltatech.diligencetech.platform.duediligenceprojectmanagement.domain.model.valueobjects.AgentRole;
 import com.deltatech.diligencetech.platform.duediligenceprojectmanagement.domain.services.ProjectCommandService;
@@ -52,25 +49,92 @@ public class ProjectCommandServiceImpl implements ProjectCommandService {
     }
 
     @Override
-    public Optional<Project> handle(UpdateProjectCommand command) {
+    public Optional<Project> handle(UpdateProjectNameCommand command) {
         var result = projectRepository.findById(command.id());
         if(result.isEmpty()) {
             throw new IllegalArgumentException("Due Diligence Project does not exist");
         }
         var dueDiligenceProjectToUpdate = result.get();
         try {
-            var updatedDueDiligenceProject = projectRepository.save(dueDiligenceProjectToUpdate.updateProjectInformation(command.projectFullName()));
-            //command.managerFirstName(),
-            //command.managerLastName(),
-            //command.startDate(),
-            //command.endDate(),
-            //command.budget(),
-            //command.progress(),
-            //command.status()));
+            var updatedDueDiligenceProject = projectRepository.save(dueDiligenceProjectToUpdate.updateProjectName(command.projectName()));
             return Optional.of(updatedDueDiligenceProject);
         } catch (Exception e) {
             throw new IllegalArgumentException("Error while updating due diligence project: " + e.getMessage());
         }
+    }
+
+    @Override
+    public Optional<Project> handle(UpdateProjectBuyStatusCommand command) {
+        var result = projectRepository.findById(command.id());
+        if(result.isEmpty()) {
+            throw new IllegalArgumentException("Due Diligence Project does not exist");
+        }
+        var dueDiligenceProjectToUpdate = result.get();
+        try {
+            var updatedDueDiligenceProject = projectRepository.save(dueDiligenceProjectToUpdate.updateProjectBuyStatus(command.buyStatus()));
+            return Optional.of(updatedDueDiligenceProject);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Error while updating due diligence project: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public Optional<Project> handle(UpdateProjectCompletedCommand command) {
+        var result = projectRepository.findById(command.id());
+        if(result.isEmpty()) {
+            throw new IllegalArgumentException("Due Diligence Project does not exist");
+        }
+        var dueDiligenceProjectToUpdate = result.get();
+        try {
+            var updatedDueDiligenceProject = projectRepository.save(dueDiligenceProjectToUpdate.updateProjectCompleted(command.completed()));
+            return Optional.of(updatedDueDiligenceProject);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Error while updating due diligence project: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public Optional<Project> handle(UpdateProjectConfirmCommand command) {
+        var result = projectRepository.findById(command.id());
+        if(result.isEmpty()) {
+            throw new IllegalArgumentException("Due Diligence Project does not exist");
+        }
+        var dueDiligenceProjectToUpdate = result.get();
+        try {
+            var updatedDueDiligenceProject = projectRepository.save(dueDiligenceProjectToUpdate.updateProjectConfirm(command.confirm()));
+            return Optional.of(updatedDueDiligenceProject);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Error while updating due diligence project: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public Optional<Project> handle(UpdateProjectSellStatusCommand command) {
+        var result = projectRepository.findById(command.id());
+        if(result.isEmpty()) {
+            throw new IllegalArgumentException("Due Diligence Project does not exist");
+        }
+        var dueDiligenceProjectToUpdate = result.get();
+        try {
+            var updatedDueDiligenceProject = projectRepository.save(dueDiligenceProjectToUpdate.updateProjectName(command.sellStatus()));
+            return Optional.of(updatedDueDiligenceProject);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Error while updating due diligence project: " + e.getMessage());
+        }
+    }
+
+    public Optional<Project> handle(UpdateProjectCommand command) {
+       var result = projectRepository.findById(command.id());
+       if(result.isEmpty()) {
+           throw new IllegalArgumentException("Due Diligence Project does not exist");
+       }
+       var dueDiligenceProjectToUpdate = result.get();
+       try {
+           var updatedDueDiligenceProject = projectRepository.save(dueDiligenceProjectToUpdate.updateProjec(command.projectName(), command.buyStatus(), command.sellStatus(), command.completed(), command.confirm()));
+           return Optional.of(updatedDueDiligenceProject);
+       } catch (Exception e) {
+           throw new IllegalArgumentException("Error while updating due diligence project");
+       }
     }
 
     @Override

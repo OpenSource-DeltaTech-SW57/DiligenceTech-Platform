@@ -5,12 +5,8 @@ import com.deltatech.diligencetech.platform.duediligenceprojectmanagement.domain
 import com.deltatech.diligencetech.platform.duediligenceprojectmanagement.domain.model.queries.GetProjectByIdQuery;
 import com.deltatech.diligencetech.platform.duediligenceprojectmanagement.domain.services.ProjectCommandService;
 import com.deltatech.diligencetech.platform.duediligenceprojectmanagement.domain.services.ProjectQueryService;
-import com.deltatech.diligencetech.platform.duediligenceprojectmanagement.interfaces.rest.resources.CreateProjectResource;
-import com.deltatech.diligencetech.platform.duediligenceprojectmanagement.interfaces.rest.resources.ProjectResource;
-import com.deltatech.diligencetech.platform.duediligenceprojectmanagement.interfaces.rest.resources.UpdateProjectResource;
-import com.deltatech.diligencetech.platform.duediligenceprojectmanagement.interfaces.rest.transform.CreateProjectCommandFromResourceAssembler;
-import com.deltatech.diligencetech.platform.duediligenceprojectmanagement.interfaces.rest.transform.ProjectResourceFromEntityAssembler;
-import com.deltatech.diligencetech.platform.duediligenceprojectmanagement.interfaces.rest.transform.UpdateProjectCommandFromResourceAssembler;
+import com.deltatech.diligencetech.platform.duediligenceprojectmanagement.interfaces.rest.resources.*;
+import com.deltatech.diligencetech.platform.duediligenceprojectmanagement.interfaces.rest.transform.*;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -67,9 +63,53 @@ public class ProjectController {
         return ResponseEntity.ok(dueDiligenceProjectResources);
     }
 
-    @PutMapping("/{projectId}")
-    public ResponseEntity<ProjectResource> updateDueDiligenceProject(@PathVariable Long projectId, @RequestBody UpdateProjectResource updateProjectResource) {
-        var updateDueDiligenceProjectCommand = UpdateProjectCommandFromResourceAssembler.toCommandFromResource(projectId, updateProjectResource);
+    @PutMapping("/project-name/{projectId}")
+    public ResponseEntity<ProjectResource> updateDueDiligenceProjectName(@PathVariable Long projectId, @RequestBody UpdateProjectNameResource updateProjectNameResource) {
+        var updateDueDiligenceProjectCommand = UpdateProjectNameCommandFromResourceAssembler.toCommandFromResource(projectId, updateProjectNameResource);
+        var updatedDueDiligenceProject = projectCommandService.handle(updateDueDiligenceProjectCommand);
+        if(updatedDueDiligenceProject.isEmpty()) {
+            return ResponseEntity.badRequest().build();
+        }
+        var dueDiligenceProjectResource = ProjectResourceFromEntityAssembler.toResourceFromEntity(updatedDueDiligenceProject.get());
+        return ResponseEntity.ok(dueDiligenceProjectResource);
+    }
+
+    @PutMapping("/project-buystatus/{projectId}")
+    public ResponseEntity<ProjectResource> updateDueDiligenceProjectBuyStatus(@PathVariable Long projectId, @RequestBody UpdateProjectBuyStatusResource updateProjectBuyStatusResource) {
+        var updateDueDiligenceProjectCommand = UpdateProjectBuyStatusCommandFromResourceAssembler.toCommandFromResource(projectId, updateProjectBuyStatusResource);
+        var updatedDueDiligenceProject = projectCommandService.handle(updateDueDiligenceProjectCommand);
+        if(updatedDueDiligenceProject.isEmpty()) {
+            return ResponseEntity.badRequest().build();
+        }
+        var dueDiligenceProjectResource = ProjectResourceFromEntityAssembler.toResourceFromEntity(updatedDueDiligenceProject.get());
+        return ResponseEntity.ok(dueDiligenceProjectResource);
+    }
+
+    @PutMapping("/project-completed/{projectId}")
+    public ResponseEntity<ProjectResource> updateDueDiligenceProjectCompleted(@PathVariable Long projectId, @RequestBody UpdateProjectCompletedResource updateProjectCompletedResource) {
+        var updateDueDiligenceProjectCommand = UpdateProjectCompletedCommandFromResourceAssembler.toCommandFromResource(projectId, updateProjectCompletedResource);
+        var updatedDueDiligenceProject = projectCommandService.handle(updateDueDiligenceProjectCommand);
+        if(updatedDueDiligenceProject.isEmpty()) {
+            return ResponseEntity.badRequest().build();
+        }
+        var dueDiligenceProjectResource = ProjectResourceFromEntityAssembler.toResourceFromEntity(updatedDueDiligenceProject.get());
+        return ResponseEntity.ok(dueDiligenceProjectResource);
+    }
+
+    @PutMapping("/project-confirm/{projectId}")
+    public ResponseEntity<ProjectResource> updateDueDiligenceProjectConfirm(@PathVariable Long projectId, @RequestBody UpdateProjectConfirmResource updateProjectConfirmResource) {
+        var updateDueDiligenceProjectCommand = UpdateProjectConfirmCommandFromResourceAssembler.toCommandFromResource(projectId, updateProjectConfirmResource);
+        var updatedDueDiligenceProject = projectCommandService.handle(updateDueDiligenceProjectCommand);
+        if(updatedDueDiligenceProject.isEmpty()) {
+            return ResponseEntity.badRequest().build();
+        }
+        var dueDiligenceProjectResource = ProjectResourceFromEntityAssembler.toResourceFromEntity(updatedDueDiligenceProject.get());
+        return ResponseEntity.ok(dueDiligenceProjectResource);
+    }
+
+    @PutMapping("/project-sellstatus/{projectId}")
+    public ResponseEntity<ProjectResource> updateDueDiligenceProjectSellStatus(@PathVariable Long projectId, @RequestBody UpdateProjectSellStatusResource updateProjectSellStatusResource) {
+        var updateDueDiligenceProjectCommand = UpdateProjectSellStatusCommandFromResourceAssembler.toCommandFromResource(projectId, updateProjectSellStatusResource);
         var updatedDueDiligenceProject = projectCommandService.handle(updateDueDiligenceProjectCommand);
         if(updatedDueDiligenceProject.isEmpty()) {
             return ResponseEntity.badRequest().build();
