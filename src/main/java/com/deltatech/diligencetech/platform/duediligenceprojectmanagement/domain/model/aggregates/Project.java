@@ -6,9 +6,6 @@ import com.deltatech.diligencetech.platform.shared.domain.model.aggregates.Audit
 import jakarta.persistence.*;
 import lombok.Getter;
 
-import java.time.Instant;
-import java.util.Date;
-
 @Getter
 @Entity
 public class Project extends AuditableAbstractAggregateRoot<Project> {
@@ -17,26 +14,19 @@ public class Project extends AuditableAbstractAggregateRoot<Project> {
     @AttributeOverride(name = "projectFullName", column = @Column(name = "project_name"))
     private ProjectName name;
 
-    //@Embedded
-    //@AttributeOverrides({
-    //        @AttributeOverride(name = "firstName", column = @Column(name = "manager_first_name")),
-    //        @AttributeOverride(name = "lastName", column = @Column(name = "manager_last_name"))})
-    //private ProjectManagerName managerName;
+    @Embedded
+    private ProjectBuyStatus buyStatus;
 
-    //@Embedded
-    //private ProjectStartDate startDate;
+    @Getter
+    @Column
+    private Boolean completed;
 
-    //@Embedded
-    //private ProjectEndDate endDate;
+    @Getter
+    @Column
+    private Boolean confirm;
 
-    //@Embedded
-    //private ProjectBudget budget;
-
-    //@Embedded
-    //private ProjectProgress progress;
-
-    //@Embedded
-    //private ProjectStatus status;
+    @Embedded
+    private ProjectSellStatus sellStatus;
 
     @Embedded
     private final ProjectMember projectMember;
@@ -45,36 +35,29 @@ public class Project extends AuditableAbstractAggregateRoot<Project> {
         this.projectMember = new ProjectMember();
     }
 
+    // In progress
+    // done
+    // None
     public Project(String projectFullName) {
         this.name = new ProjectName(projectFullName);
-        //this.managerName = new ProjectManagerName(managerFirstName, managerLastName);
-        //this.startDate = new ProjectStartDate(startDate);
-        //this.endDate = new ProjectEndDate(endDate);
-        //this.budget = new ProjectBudget(budget);
-        //this.progress = new ProjectProgress(progress);
-        //this.status = new ProjectStatus(status);
+        this.buyStatus = new ProjectBuyStatus("NONE");
+        this.sellStatus = new ProjectSellStatus("NONE");
+        this.completed = false;
+        this.confirm = false;
         this.projectMember = new ProjectMember();
     }
 
     public Project(CreateProjectCommand command) {
         this.name = new ProjectName(command.projectFullName());
-        //this.managerName = new ProjectManagerName(command.managerFirstName(), command.managerLastName());
-        //this.startDate = new ProjectStartDate(Date.from(Instant.parse(command.startDate())));
-        //this.endDate = new ProjectEndDate(Date.from(Instant.parse(command.endDate())));
-        //this.budget = new ProjectBudget(command.budget());
-        //this.progress = new ProjectProgress(command.progress());
-        //this.status = new ProjectStatus(command.status());
+        this.buyStatus = new ProjectBuyStatus("NONE");
+        this.sellStatus = new ProjectSellStatus("NONE");
+        this.completed = false;
+        this.confirm = false;
         this.projectMember = new ProjectMember();
     }
 
     public Project updateProjectInformation(String projectFullName) {
         this.name = new ProjectName(projectFullName);
-        //this.managerName = new ProjectManagerName(managerFirstName, managerLastName);
-        //this.startDate = new ProjectStartDate(Date.from(Instant.parse(startDate)));
-        //this.endDate = new ProjectEndDate(Date.from(Instant.parse(endDate)));
-        //this.budget = new ProjectBudget(budget);
-        //this.progress = new ProjectProgress(progress);
-        //this.status = new ProjectStatus(status);
         return this;
     }
 
