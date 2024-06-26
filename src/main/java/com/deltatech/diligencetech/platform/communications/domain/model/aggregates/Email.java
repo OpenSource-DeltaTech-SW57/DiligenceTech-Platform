@@ -15,11 +15,19 @@ public class Email extends AuditableAbstractAggregateRoot<Email> {
 
     @Column
     @Getter
-    private Long senderId;
+    private String senderEmail;
 
     @Column
     @Getter
-    private Long receiverId;
+    private String receiverEmail;
+
+    @Column
+    @Getter
+    private String title;
+
+    @Column
+    @Getter
+    private String description;
 
     @Column
     @Getter
@@ -32,8 +40,10 @@ public class Email extends AuditableAbstractAggregateRoot<Email> {
     }
 
     public Email(CreateEmailCommand command){
-        this.senderId = command.senderId();
-        this.receiverId = command.receiverId();
+        this.senderEmail = command.senderEmail();
+        this.receiverEmail = command.receiverEmail();
+        this.title = command.title();
+        this.description = command.description();
         this.message = command.message();
     }
 

@@ -9,7 +9,7 @@ import java.util.List;
 @Repository
 public interface EmailRepository extends JpaRepository<Email, Long> {
 
-    List<Email> findByReceiverId(Long receiverId);
-    List<Email> findBySenderId(Long senderId);
+    List<Email> findByReceiverEmail(String receiverEmail);
+    List<Email> findBySenderEmail(String senderEmail);
 
 }
