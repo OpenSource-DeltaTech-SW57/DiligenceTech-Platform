@@ -7,7 +7,7 @@ public record ProjectSellStatus(String sellStatus) {
     public ProjectSellStatus() {this(null);}
 
     public ProjectSellStatus {
-        if (sellStatus.isBlank() || sellStatus == null) {
+        if (sellStatus.isBlank()) {
             throw new IllegalArgumentException("Project sellStatus cannot be null or blank");
         }
     }
