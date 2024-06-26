@@ -1,11 +1,10 @@
 package com.deltatech.diligencetech.platform.communications.interfaces.rest;
 
 
-import com.deltatech.diligencetech.platform.communications.domain.model.aggregates.Email;
 import com.deltatech.diligencetech.platform.communications.domain.model.queries.GetAllEmailsQuery;
 import com.deltatech.diligencetech.platform.communications.domain.model.queries.GetEmailByIdQuery;
-import com.deltatech.diligencetech.platform.communications.domain.model.queries.GetEmailByReceiverIdQuery;
-import com.deltatech.diligencetech.platform.communications.domain.model.queries.GetEmailBySenderIdQuery;
+import com.deltatech.diligencetech.platform.communications.domain.model.queries.GetEmailByReceiverEmailQuery;
+import com.deltatech.diligencetech.platform.communications.domain.model.queries.GetEmailBySenderEmailQuery;
 import com.deltatech.diligencetech.platform.communications.domain.services.EmailCommandService;
 import com.deltatech.diligencetech.platform.communications.domain.services.EmailQueryService;
 import com.deltatech.diligencetech.platform.communications.interfaces.rest.resources.CreateEmailResource;
@@ -61,19 +60,19 @@ public class EmailController {
         var emailResource = EmailResourceFromEntityAssembler.toResourceFromEntity(email.get());
         return new ResponseEntity<>(emailResource, HttpStatus.CREATED);
     }
-    @GetMapping("/sender/{senderId}")
-    public ResponseEntity<List<EmailResource>> getEmailsBySenderId(@PathVariable Long senderId) {
-        var getEmailsBySenderIdQuery = new GetEmailBySenderIdQuery(senderId);
-        var emails = emailQueryService.handle(getEmailsBySenderIdQuery);
+    @GetMapping("/sender/{senderEmail}")
+    public ResponseEntity<List<EmailResource>> getEmailsBySenderEmail(@PathVariable String senderEmail) {
+        var getEmailsBySenderEmailQuery = new GetEmailBySenderEmailQuery(senderEmail);
+        var emails = emailQueryService.handle(getEmailsBySenderEmailQuery);
         var emailsResources = emails.stream()
                 .map(EmailResourceFromEntityAssembler::toResourceFromEntity)
                 .toList();
         return ResponseEntity.ok(emailsResources);
     }
-    @GetMapping("/receiver/{receiverId}")
-    public ResponseEntity<List<EmailResource>> getEmailsByReceiverId(@PathVariable Long receiverId) {
-        var getEmailsByReceiverIdQuery = new GetEmailByReceiverIdQuery(receiverId);
-        var emails = emailQueryService.handle(getEmailsByReceiverIdQuery);
+    @GetMapping("/receiver/{receiverEmail}")
+    public ResponseEntity<List<EmailResource>> getEmailsByReceiverEmail(@PathVariable String receiverEmail) {
+        var getEmailsByReceiverEmailQuery = new GetEmailByReceiverEmailQuery(receiverEmail);
+        var emails = emailQueryService.handle(getEmailsByReceiverEmailQuery);
         var emailsResources = emails.stream()
                 .map(EmailResourceFromEntityAssembler::toResourceFromEntity)
                 .toList();

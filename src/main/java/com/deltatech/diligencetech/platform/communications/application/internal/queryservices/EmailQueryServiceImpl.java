@@ -3,8 +3,8 @@ package com.deltatech.diligencetech.platform.communications.application.internal
 import com.deltatech.diligencetech.platform.communications.domain.model.aggregates.Email;
 import com.deltatech.diligencetech.platform.communications.domain.model.queries.GetAllEmailsQuery;
 import com.deltatech.diligencetech.platform.communications.domain.model.queries.GetEmailByIdQuery;
-import com.deltatech.diligencetech.platform.communications.domain.model.queries.GetEmailByReceiverIdQuery;
-import com.deltatech.diligencetech.platform.communications.domain.model.queries.GetEmailBySenderIdQuery;
+import com.deltatech.diligencetech.platform.communications.domain.model.queries.GetEmailByReceiverEmailQuery;
+import com.deltatech.diligencetech.platform.communications.domain.model.queries.GetEmailBySenderEmailQuery;
 import com.deltatech.diligencetech.platform.communications.domain.services.EmailQueryService;
 import com.deltatech.diligencetech.platform.communications.infrastructure.persistence.jpa.repositories.EmailRepository;
 import org.springframework.stereotype.Service;
@@ -32,13 +32,13 @@ public class EmailQueryServiceImpl implements EmailQueryService {
     }
 
     @Override
-    public List<Email> handle(GetEmailBySenderIdQuery query) {
-        return emailRepository.findBySenderId(query.senderId());
+    public List<Email> handle(GetEmailBySenderEmailQuery query) {
+        return emailRepository.findBySenderEmail(query.senderEmail());
     }
 
     @Override
-    public List<Email> handle(GetEmailByReceiverIdQuery query) {
-        return emailRepository.findByReceiverId(query.receiverId());
+    public List<Email> handle(GetEmailByReceiverEmailQuery query) {
+        return emailRepository.findByReceiverEmail(query.receiverEmail());
     }
 
 }
